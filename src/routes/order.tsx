@@ -225,14 +225,6 @@ function OrderPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={IMAGES.product}
-                download
-                className="mt-5 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-warm uppercase hover:text-forest"
-              >
-                <Download className="size-3.5" />
-                Save product image
-              </a>
             </div>
 
             <div className="surface-card p-6">
