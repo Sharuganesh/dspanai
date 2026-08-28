@@ -61,7 +61,7 @@ function Crystal({ spec }: { spec: CrystalSpec }) {
       <mesh ref={ref} position={spec.position} rotation={spec.rotation} scale={spec.scale}>
         <dodecahedronGeometry args={[1, 0]} />
         <meshPhysicalMaterial
-          color="#d8a css"
+          color="#dda85c"
           roughness={0.22}
           metalness={0}
           clearcoat={1}
