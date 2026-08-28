@@ -59,14 +59,16 @@ function Header() {
       <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-4 py-2 md:px-8">
         <Logo className={cn("transition-all duration-500", scrolled && "h-12 md:h-14")} />
 
-        <nav aria-label="Main" className="hidden items-center gap-9 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
               className="group relative text-sm font-semibold text-forest/85 transition-colors hover:text-forest"
               activeProps={{ className: "text-forest" }}
             >
+
               {item.label}
               <span className="font-tamil block text-[11px] font-normal text-warm" lang="ta">
                 {item.ta}
