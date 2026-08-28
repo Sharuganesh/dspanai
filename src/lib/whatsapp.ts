@@ -1,50 +1,62 @@
 import type { CartLine, CustomerDetails } from "./cart";
 import { BRAND, PRODUCT, calculatePrice, formatINR, formatWeight } from "./product";
 
-export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): string {
-  const productBlock = lines
-    .map((l) => {
-      const unit = calculatePrice(l.weightGrams);
+function linesToTable(lines: CartLine[]): string {
+  return lines
+    .map((l, i) => {
+      const lineTotal = calculatePrice(l.weightGrams) * l.quantity;
       return [
-        `• ${PRODUCT.name}`,
-        `  Weight: ${formatWeight(l.weightGrams)}`,
-        `  Quantity: ${l.quantity}`,
-        `  Price: ${formatINR(unit * l.quantity)}`,
+        `${i + 1}. ${PRODUCT.shortName}`,
+        `   Weight: ${formatWeight(l.weightGrams)}`,
+        `   Quantity: ${l.quantity}`,
+        `   Line Total: ${formatINR(lineTotal)}`,
       ].join("\n");
     })
-    .join("\n");
+    .join("\n\n");
+}
 
-  const subtotal = lines.reduce((sum, l) => sum + calculatePrice(l.weightGrams) * l.quantity, 0);
+function optionalCustomerFields(details: CustomerDetails): string[] {
+  const out: string[] = [];
+  if (details.whatsapp && details.whatsapp.trim() !== details.mobile.trim()) {
+    out.push(`WhatsApp: ${details.whatsapp}`);
+  }
+  if (details.email?.trim()) out.push(`Email: ${details.email}`);
+  if (details.landmark?.trim()) out.push(`Landmark: ${details.landmark}`);
+  if (details.instructions?.trim()) out.push(`Instructions: ${details.instructions}`);
+  return out;
+}
 
-  const optional = [
-    details.email ? `Email: ${details.email}` : null,
-    details.landmark ? `Landmark: ${details.landmark}` : null,
-    details.instructions ? `Delivery Instructions: ${details.instructions}` : null,
-  ].filter(Boolean);
+export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): string {
+  const productTotal = lines.reduce(
+    (sum, l) => sum + calculatePrice(l.weightGrams) * l.quantity,
+    0,
+  );
+
+  const optional = optionalCustomerFields(details);
 
   return [
     `Hello ${BRAND.name},`,
     "",
-    "I would like to place an order.",
+    "I would like to place an order for Panangarkandu (Palm Candy).",
     "",
-    "ORDER",
-    productBlock,
+    "ORDER DETAILS",
+    linesToTable(lines),
     "",
     "CUSTOMER DETAILS",
     `Name: ${details.fullName}`,
-    `Phone: ${details.mobile}`,
-    `WhatsApp: ${details.whatsapp || details.mobile}`,
-    `Address: ${details.address}`,
-    `City: ${details.city}`,
-    `State: ${details.state}`,
-    `Pincode: ${details.pincode}`,
+    `Contact: ${details.mobile}`,
     ...optional,
     "",
-    "ORDER TOTAL",
-    `Product Total: ${formatINR(subtotal)}`,
-    `Shipping: India ${formatINR(BRAND.shippingIndia)} · International ${formatINR(BRAND.shippingInternational)}`,
+    "DELIVERY ADDRESS",
+    details.address,
+    `${details.city}, ${details.state} - ${details.pincode}`,
     "",
-    "Please confirm availability and the final order total.",
+    "ORDER TOTAL",
+    `Product Total: ${formatINR(productTotal)}`,
+    `Shipping (India): ${formatINR(BRAND.shippingIndia)}`,
+    `Shipping (International): ${formatINR(BRAND.shippingInternational)}`,
+    "",
+    "Please confirm availability and the final payable amount.",
     "",
     "Thank you.",
   ].join("\n");
