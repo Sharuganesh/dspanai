@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Check, Copy, Download } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { WhatsAppIcon } from "@/components/Brand";
 import { EMPTY_DETAILS, useCart, type CustomerDetails } from "@/lib/cart";
 import { IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
@@ -225,14 +225,6 @@ function OrderPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={IMAGES.product}
-                download
-                className="mt-5 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-warm uppercase hover:text-forest"
-              >
-                <Download className="size-3.5" />
-                Save product image
-              </a>
             </div>
 
             <div className="surface-card p-6">
@@ -318,8 +310,8 @@ function OrderPage() {
               {copied ? "Copied" : "Copy order details"}
             </button>
             <p className="mt-4 text-xs text-muted-foreground">
-              Your details stay in your browser until you send them yourself on WhatsApp. You can
-              also attach the product image if needed.
+              Your details stay in your browser until you send them yourself on WhatsApp.
+
             </p>
           </aside>
         </div>

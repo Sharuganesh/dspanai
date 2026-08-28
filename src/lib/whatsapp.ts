@@ -1,12 +1,5 @@
 import type { CartLine, CustomerDetails } from "./cart";
-import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "./product";
-
-/** Absolute URL of the product photo so WhatsApp shows an image preview in the order message. */
-export function productImageUrl(): string {
-  // Always the canonical public origin so the URL works inside WhatsApp
-  // and stays identical between server render and client hydration.
-  return `${BRAND.siteUrl}${IMAGES.product}`;
-}
+import { BRAND, PRODUCT, calculatePrice, formatINR, formatWeight } from "./product";
 
 export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): string {
   const productBlock = lines
@@ -14,17 +7,14 @@ export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): 
       const unit = calculatePrice(l.weightGrams);
       return [
         `• ${PRODUCT.name}`,
-        `  Weight / எடை: ${formatWeight(l.weightGrams)}`,
-        `  Quantity / எண்ணிக்கை: ${l.quantity}`,
-        `  Price / விலை: ${formatINR(unit * l.quantity)}`,
+        `  Weight: ${formatWeight(l.weightGrams)}`,
+        `  Quantity: ${l.quantity}`,
+        `  Price: ${formatINR(unit * l.quantity)}`,
       ].join("\n");
     })
     .join("\n");
 
-  const subtotal = lines.reduce(
-    (sum, l) => sum + calculatePrice(l.weightGrams) * l.quantity,
-    0,
-  );
+  const subtotal = lines.reduce((sum, l) => sum + calculatePrice(l.weightGrams) * l.quantity, 0);
 
   const optional = [
     details.email ? `Email: ${details.email}` : null,
@@ -33,37 +23,30 @@ export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): 
   ].filter(Boolean);
 
   return [
-    productImageUrl(),
-    "",
     `Hello ${BRAND.name},`,
-    "வணக்கம்!",
     "",
-    "I would like to place an order. / நான் ஆர்டர் செய்ய விரும்புகிறேன்.",
+    "I would like to place an order.",
     "",
-    "PRODUCT / பொருள்",
-    `${PRODUCT.name}`,
-    `${PRODUCT.tamilName} (Palm Candy)`,
-    "",
+    "ORDER",
     productBlock,
     "",
-    "CUSTOMER DETAILS / வாடிக்கையாளர் விவரம்",
-    `Name / பெயர்: ${details.fullName}`,
-    `Phone / தொலைபேசி: ${details.mobile}`,
+    "CUSTOMER DETAILS",
+    `Name: ${details.fullName}`,
+    `Phone: ${details.mobile}`,
     `WhatsApp: ${details.whatsapp || details.mobile}`,
-    `Address / முகவரி: ${details.address}`,
-    `City / ஊர்: ${details.city}`,
-    `State / மாநிலம்: ${details.state}`,
-    `Pincode / அஞ்சல் குறியீடு: ${details.pincode}`,
+    `Address: ${details.address}`,
+    `City: ${details.city}`,
+    `State: ${details.state}`,
+    `Pincode: ${details.pincode}`,
     ...optional,
     "",
-    "ORDER TOTAL / மொத்தம்",
+    "ORDER TOTAL",
     `Product Total: ${formatINR(subtotal)}`,
-    `Shipping (India): ${formatINR(BRAND.shippingIndia)} · International: ${formatINR(BRAND.shippingInternational)}`,
+    `Shipping: India ${formatINR(BRAND.shippingIndia)} · International ${formatINR(BRAND.shippingInternational)}`,
     "",
     "Please confirm availability and the final order total.",
-    "கிடைக்கும் தன்மையையும் இறுதி தொகையையும் உறுதிபடுத்துங்கள்.",
     "",
-    "Thank you / நன்றி.",
+    "Thank you.",
   ].join("\n");
 }
 
@@ -74,15 +57,11 @@ export function whatsappUrl(message: string): string {
 /** Short enquiry message used by lead-capture blocks. */
 export function buildLeadMessage(name: string, interest: string): string {
   return [
-    productImageUrl(),
-    "",
     `Hello ${BRAND.name},`,
-    "வணக்கம்!",
     "",
-    `My name is ${name}. / என் பெயர் ${name}.`,
+    `My name is ${name}.`,
     `I am interested in: ${interest}`,
     "",
-    "Please send me the Panangarkandu (palm candy) price list and availability.",
-    "பனங்கற்கண்டு விலை பட்டியலை அனுப்புங்கள்.",
+    "Please send me the palm candy (Panangarkandu) price list and availability.",
   ].join("\n");
 }
