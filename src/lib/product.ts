@@ -29,13 +29,18 @@ export const BRAND = {
   instagramUrl: "https://instagram.com/",
   email: "hello@dspanai.com",
   monthlyVolumeKg: 2500,
+  yearsInTrade: 25,
+  shippingIndia: 50,
+  shippingInternational: 500,
+  siteUrl: "https://project--a89224d2-c4d9-42da-9d1c-a79a4a4e4da6.lovable.app",
 };
 
 export const PRODUCT = {
   id: "panangarkandu",
   slug: "panangarkandu",
-  name: "D's PANAI Pure Panangarkandu",
-  shortName: "Pure Panangarkandu",
+  name: "D's PANAI Pure Panangarkandu (Palm Candy)",
+  shortName: "Pure Panangarkandu — Palm Candy",
+  englishName: "Palm Candy",
   tamilName: "பனங்கற்கண்டு",
   category: "Palm Candy",
   basePrice: 300,
@@ -45,9 +50,9 @@ export const PRODUCT = {
   weightIncrementGrams: 50,
   currency: "INR",
   description:
-    "Traditional palm candy with naturally formed crystals, packed in our signature cloth pouch.",
+    "Traditional palm candy (Panangarkandu) with naturally formed crystals, packed in our signature plastic-free cloth pouch.",
   longDescription:
-    "Traditional palm candy, carefully selected and packed in a natural cloth pouch inspired by the way traditional goods were carried and stored.",
+    "Panangarkandu — palm candy — is the crystallised sweetness of palm sap, used in Tamil homes for generations in coffee, milk and kashayam. Ours is carefully selected and packed in a natural cloth pouch inspired by the way traditional goods were carried and stored.",
   quickWeights: [250, 500, 750, 1000, 2000, 5000],
   allWeights: [250, 500, 750, 1000, 1250, 1500, 2000, 2500, 3000, 5000, 10000],
   gallery: [

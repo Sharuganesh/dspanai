@@ -1,15 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { BRAND, IMAGES } from "@/lib/product";
+import { BRAND } from "@/lib/product";
 import { cn } from "@/lib/utils";
+import logoMark from "@/assets/logo-mark.png";
 
 export function Logo({ className }: { className?: string }) {
   return (
     <Link to="/" aria-label={`${BRAND.name} home`} className="inline-flex items-center">
       <img
-        src={IMAGES.logo}
-        alt={`${BRAND.name} — Pure Panangarkandu`}
-        width={190}
-        height={190}
+        src={logoMark}
+        alt={`${BRAND.name} — Pure Panangarkandu palm candy`}
+        width={594}
+        height={805}
         className={cn("h-14 w-auto md:h-[74px]", className)}
       />
     </Link>
@@ -26,5 +27,19 @@ export function WhatsAppIcon({ className }: { className?: string }) {
         clipRule="evenodd"
       />
     </svg>
+  );
+}
+
+/** Traditional kolam-inspired divider used between sections. */
+export function Ornament({ className }: { className?: string }) {
+  return (
+    <div className={cn("flex items-center justify-center gap-3", className)} aria-hidden="true">
+      <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60" />
+      <svg viewBox="0 0 24 24" className="size-4 text-gold" fill="currentColor">
+        <path d="M12 2c1.6 3.2 3.2 4.8 6.4 6.4-3.2 1.6-4.8 3.2-6.4 6.4-1.6-3.2-3.2-4.8-6.4-6.4C8.8 6.8 10.4 5.2 12 2Z" />
+        <circle cx="12" cy="19" r="1.6" />
+      </svg>
+      <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/60" />
+    </div>
   );
 }
