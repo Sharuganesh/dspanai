@@ -284,7 +284,6 @@ function OrderPage() {
               href={whatsappUrl(message)}
               target="_blank"
               rel="noreferrer"
-              onClick={() => setOpened(true)}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-[1.02]"
             >
               <WhatsAppIcon className="size-5" />
@@ -293,13 +292,9 @@ function OrderPage() {
             <button
               type="button"
               onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(message);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 2500);
-                } catch {
-                  setOpened(true);
-                }
+                await navigator.clipboard.writeText(message);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2500);
               }}
               className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-forest/25 px-6 py-3.5 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream"
             >
