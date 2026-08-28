@@ -5,20 +5,22 @@ import { BRAND, PRODUCT } from "@/lib/product";
 import { useCart } from "@/lib/cart";
 import { CartDrawer } from "./CartDrawer";
 import { Logo, WhatsAppIcon } from "./Brand";
+import { WhatsAppFloat } from "./WhatsAppFloat";
+import { LeadPopup } from "./LeadPopup";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/shop", label: "Shop" },
-  { to: "/our-story", label: "Our Story" },
-  { to: "/purity", label: "Purity" },
-  { to: "/contact", label: "Contact" },
+  { to: "/shop", label: "Shop", ta: "கடை" },
+  { to: "/our-story", label: "Our Story", ta: "எங்கள் கதை" },
+  { to: "/purity", label: "Purity", ta: "தூய்மை" },
+  { to: "/contact", label: "Contact", ta: "தொடர்பு" },
 ] as const;
 
 function AnnouncementBar() {
   return (
     <div className="bg-forest px-4 py-2 text-center">
       <p className="text-[11px] font-medium tracking-[0.14em] text-primary-foreground/90 uppercase">
-        Traditional Panangarkandu · Packed in a plastic-free cloth pouch
+        Pure Panangarkandu (Palm Candy) · பனங்கற்கண்டு · Worldwide shipping
       </p>
     </div>
   );
@@ -64,6 +66,9 @@ function Header() {
               activeProps={{ className: "text-forest" }}
             >
               {item.label}
+              <span className="font-tamil block text-[11px] font-normal text-warm" lang="ta">
+                {item.ta}
+              </span>
               <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gold transition-all duration-400 group-hover:w-full" />
             </Link>
           ))}
@@ -137,6 +142,11 @@ function Header() {
               }}
             >
               {item.label}
+              {"ta" in item && (
+                <span className="font-tamil block text-base text-warm" lang="ta">
+                  {item.ta}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -164,8 +174,9 @@ function Footer() {
           <h3 className="font-display text-2xl">{BRAND.name}</h3>
           <p className="font-tamil mt-1 text-sm text-warm">{PRODUCT.tamilName}</p>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Pure Panangarkandu from a family tradition, packed in a plastic-free primary cloth
-            pouch.
+            Pure Panangarkandu (palm candy) from a family trade of {BRAND.yearsInTrade}+ years,
+            packed in a plastic-free primary cloth pouch. Shipped across India (
+            {`₹${BRAND.shippingIndia}`}) and worldwide ({`₹${BRAND.shippingInternational}`}).
           </p>
         </div>
         <FooterCol
@@ -254,6 +265,8 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <CartDrawer />
+      <WhatsAppFloat />
+      <LeadPopup />
     </div>
   );
 }
