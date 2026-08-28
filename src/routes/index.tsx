@@ -748,10 +748,12 @@ function InstagramSection() {
 function LeadBanner() {
   return (
     <section className="mx-auto max-w-[1240px] px-6 pb-20 md:px-8">
-      <Reveal
-        className="ornate-frame overflow-hidden px-8 py-14 text-center"
-        style={{ background: "var(--gradient-forest)" }}
-      >
+      <Reveal>
+        <div
+          className="ornate-frame overflow-hidden px-8 py-14 text-center"
+          style={{ background: "var(--gradient-forest)" }}
+        >
+
         <p className="text-[11px] font-semibold tracking-[0.24em] text-primary-foreground/70 uppercase">
           Order in minutes
         </p>
