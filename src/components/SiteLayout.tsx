@@ -42,10 +42,13 @@ function Header() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.toggleAttribute("data-menu-open", menuOpen);
     return () => {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-menu-open");
     };
   }, [menuOpen]);
+
 
   return (
     <header
