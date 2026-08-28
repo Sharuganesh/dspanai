@@ -21,10 +21,10 @@ function useCrystals(count: number): CrystalSpec[] {
     const rng = mulberry32(20260828);
     return Array.from({ length: count }, () => {
       const angle = rng() * Math.PI * 2;
-      const radius = 4.4 + rng() * 2.2;
+      const radius = 2.8 + rng() * 2.6;
       return {
         position: [
-          Math.cos(angle) * radius,
+          Math.cos(angle) * radius * 1.2 + 1.4,
           (rng() - 0.5) * 5.4,
           Math.sin(angle) * radius * 0.6 - 1.2,
         ],
