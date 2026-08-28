@@ -65,7 +65,6 @@ function OrderPage() {
   const [confirmed, setConfirmed] = useState(false);
   const [touched, setTouched] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [opened, setOpened] = useState(false);
 
   const message = useMemo(() => buildOrderMessage(lines, details), [lines, details]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
