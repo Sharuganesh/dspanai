@@ -10,11 +10,13 @@ import { LeadPopup } from "./LeadPopup";
 import { cn } from "@/lib/utils";
 
 const NAV = [
+  { to: "/", label: "Home", ta: "முகப்பு" },
   { to: "/shop", label: "Shop", ta: "கடை" },
   { to: "/our-story", label: "Our Story", ta: "எங்கள் கதை" },
   { to: "/purity", label: "Purity", ta: "தூய்மை" },
   { to: "/contact", label: "Contact", ta: "தொடர்பு" },
 ] as const;
+
 
 function AnnouncementBar() {
   return (
