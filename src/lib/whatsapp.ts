@@ -3,11 +3,9 @@ import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from 
 
 /** Absolute URL of the product photo so WhatsApp shows an image preview in the order message. */
 export function productImageUrl(): string {
-  const origin =
-    typeof window !== "undefined" && window.location?.origin
-      ? window.location.origin
-      : BRAND.siteUrl;
-  return `${origin}${IMAGES.product}`;
+  // Always the canonical public origin so the URL works inside WhatsApp
+  // and stays identical between server render and client hydration.
+  return `${BRAND.siteUrl}${IMAGES.product}`;
 }
 
 export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): string {
