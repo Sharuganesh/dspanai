@@ -49,6 +49,9 @@ export function LeadPopup() {
     ),
   );
 
+  // Client-only: never rendered during SSR.
+  if (!open) return null;
+
   return (
     <div
       className={cn(
