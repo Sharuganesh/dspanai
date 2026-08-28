@@ -253,3 +253,8 @@
   text-transform: uppercase;
   color: var(--color-warm);
 }
+
+/* Hide the floating WhatsApp button while the mobile menu is open */
+body[data-menu-open] .wa-float {
+  display: none;
+}
