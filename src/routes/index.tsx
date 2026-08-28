@@ -784,6 +784,7 @@ function LeadBanner() {
             Browse weights
           </Link>
         </div>
+        </div>
       </Reveal>
     </section>
   );
