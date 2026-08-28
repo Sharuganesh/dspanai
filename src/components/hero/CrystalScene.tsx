@@ -21,11 +21,11 @@ function useCrystals(count: number): CrystalSpec[] {
     const rng = mulberry32(20260828);
     return Array.from({ length: count }, () => {
       const angle = rng() * Math.PI * 2;
-      const radius = 3.6 + rng() * 2.4;
+      const radius = 4.4 + rng() * 2.2;
       return {
         position: [
           Math.cos(angle) * radius,
-          (rng() - 0.5) * 4.6,
+          (rng() - 0.5) * 5.4,
           Math.sin(angle) * radius * 0.6 - 1.2,
         ],
         scale: 0.16 + rng() * 0.26,
@@ -61,12 +61,12 @@ function Crystal({ spec }: { spec: CrystalSpec }) {
       <mesh ref={ref} position={spec.position} rotation={spec.rotation} scale={spec.scale}>
         <dodecahedronGeometry args={[1, 0]} />
         <meshPhysicalMaterial
-          color="#e6c48a"
-          roughness={0.34}
+          color="#d8a css"
+          roughness={0.22}
           metalness={0}
-          clearcoat={0.6}
+          clearcoat={1}
           clearcoatRoughness={0.4}
-          transmission={0.45}
+          transmission={0.3}
           thickness={1.4}
           ior={1.42}
           attenuationColor="#c08b3e"

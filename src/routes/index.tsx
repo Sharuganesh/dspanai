@@ -56,7 +56,7 @@ function Hero() {
         <Hero3D />
       </div>
 
-      <div className="pointer-events-none relative mx-auto grid max-w-[1240px] items-center gap-10 px-6 pt-14 pb-20 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:pt-20 lg:pb-28">
+      <div className="pointer-events-none relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 pt-14 pb-20 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:pt-20 lg:pb-28">
         <div className="pointer-events-auto">
           <p
             className="eyebrow font-tamil animate-rise"
