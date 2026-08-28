@@ -263,22 +263,20 @@ function OrderPage() {
               </dl>
             </div>
 
-            {opened && (
-              <div className="rounded-2xl border border-gold/50 bg-cream p-6">
-                <p className="flex items-center gap-2 font-display text-lg text-forest">
-                  <Check className="size-5 text-palm" /> WhatsApp opened
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Your order details have been prepared. Please send the message in WhatsApp to
-                  complete your order.
-                </p>
-                <p className="mt-4 text-sm font-semibold text-forest">Unable to open WhatsApp?</p>
-                <p className="text-sm text-muted-foreground">Copy your order message below.</p>
-                <pre className="mt-3 max-h-48 overflow-auto rounded-lg border border-border bg-ivory p-4 text-xs whitespace-pre-wrap text-forest">
-                  {message}
-                </pre>
+            <div className="surface-card p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="font-display text-xl">WhatsApp message preview</h2>
+                <span className="text-[10px] font-semibold tracking-wide text-warm uppercase">
+                  One-tap send
+                </span>
               </div>
-            )}
+              <p className="mt-2 text-sm text-muted-foreground">
+                This is the exact English message that will open in WhatsApp when you tap the button.
+              </p>
+              <pre className="mt-4 max-h-64 overflow-auto rounded-lg border border-border bg-ivory p-4 text-xs whitespace-pre-wrap text-forest">
+                {message}
+              </pre>
+            </div>
           </div>
 
           <aside className="surface-card p-6 lg:sticky lg:top-28">
