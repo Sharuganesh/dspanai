@@ -62,11 +62,15 @@ const FIELDS: FieldDef[] = [
 ];
 
 function OrderPage() {
-  const { lines, subtotal, details, setDetails } = useCart();
+  const { lines, subtotal, details, setDetails, clearCart } = useCart();
   const [step, setStep] = useState<"details" | "review">("details");
   const [confirmed, setConfirmed] = useState(false);
   const [touched, setTouched] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [placing, setPlacing] = useState(false);
+  const [placed, setPlaced] = useState<{ orderId: string; emailed: boolean } | null>(null);
+  const [orderError, setOrderError] = useState<string | null>(null);
+  const submitOrder = useServerFn(placeOrder);
 
   const message = useMemo(() => buildOrderMessage(lines, details), [lines, details]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
