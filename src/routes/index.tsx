@@ -92,22 +92,11 @@ function Hero() {
             <span className="text-palm italic">carried forward.</span>
           </h1>
           <p
-            className="font-tamil animate-rise mt-3 text-lg text-warm md:text-xl"
-            lang="ta"
-            style={{ animationDelay: "220ms" }}
-          >
-            தலைமுறைகளாக தொடரும் பாரம்பரிய இனிப்பு — தூய பனங்கற்கண்டு.
-          </p>
-          <p
             className="animate-rise mt-6 max-w-lg text-base leading-relaxed text-muted-foreground md:text-lg"
             style={{ animationDelay: "300ms" }}
           >
             Pure Panangarkandu (palm candy) from a family trade of {BRAND.yearsInTrade}+ years —
             packed in a plastic-free cloth pouch and delivered to your door.
-          </p>
-          <p className="font-tamil mt-2 max-w-lg text-sm text-warm" lang="ta">
-            {BRAND.yearsInTrade}+ ஆண்டு குடும்பத் தொழில். இப்போது ஆன்லைனில் — உலகம்
-            முழுவதும் அனுப்பப்படுகிறது.
           </p>
 
           <div
@@ -205,9 +194,6 @@ function TrustStrip() {
           <Reveal key={item.en} delay={i * 90} className="surface-card p-6">
             <item.icon className="size-6 text-palm" strokeWidth={1.5} />
             <h3 className="mt-4 text-lg leading-snug">{item.en}</h3>
-            <p className="font-tamil mt-1 text-sm text-warm" lang="ta">
-              {item.ta}
-            </p>
             <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
           </Reveal>
         ))}
@@ -237,10 +223,6 @@ function WhatIsIt() {
             coffee, stirred into warm milk, added to kashayam, or simply given to children as a
             treat.
           </p>
-          <p className="font-tamil mt-4 text-base leading-relaxed text-warm" lang="ta">
-            பனங்கற்கண்டு என்பது பனை மரத்தின் பதநீரிலிருந்து இயற்கையாக உருவாகும் கற்கண்டு.
-            காபி, பால், கசாயம் என தமிழ் வீடுகளில் தலைமுறைகளாக பயன்படுத்தப்படும் இனிப்பு.
-          </p>
           <ul className="mt-7 space-y-3 text-sm">
             {[
               ["Naturally formed crystals", "இயற்கையாக உருவான கற்கண்டு"],
@@ -252,9 +234,6 @@ function WhatIsIt() {
                 <span className="mt-1 text-gold">✦</span>
                 <span>
                   <span className="font-semibold text-forest">{en}</span>
-                  <span className="font-tamil block text-warm" lang="ta">
-                    {ta}
-                  </span>
                 </span>
               </li>
             ))}
@@ -320,9 +299,6 @@ function FeaturedProduct() {
 
           <div>
             <h3 className="font-display text-3xl md:text-4xl">{PRODUCT.name}</h3>
-            <p className="font-tamil mt-1 text-lg text-warm" lang="ta">
-              {PRODUCT.tamilName} — பனை கற்கண்டு
-            </p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
               {PRODUCT.description}
             </p>
@@ -417,9 +393,6 @@ function WaysToUse() {
               <div key={u.en} className="surface-card p-5">
                 <u.icon className="size-5 text-palm" strokeWidth={1.5} />
                 <h3 className="mt-3 text-base leading-snug">{u.en}</h3>
-                <p className="font-tamil text-sm text-warm" lang="ta">
-                  {u.ta}
-                </p>
                 <p className="mt-2 text-sm text-muted-foreground">{u.body}</p>
               </div>
             ))}
@@ -461,9 +434,6 @@ function HowWePack() {
                   </span>
                   <div className="border-l border-border pl-5">
                     <h3 className="text-lg leading-snug">{en}</h3>
-                    <p className="font-tamil text-sm text-warm" lang="ta">
-                      {ta}
-                    </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">{body}</p>
                   </div>
                 </li>
@@ -518,10 +488,6 @@ function HeritageScale() {
             consumer-facing brand built on a family trade of more than {BRAND.yearsInTrade} years —
             the same Panangarkandu we have always supplied, now brought directly to your home.
           </p>
-          <p className="font-tamil mt-4 text-base leading-relaxed text-warm" lang="ta">
-            {BRAND.yearsInTrade}+ ஆண்டுகளாக நாங்கள் செய்யும் அதே தொழில். இப்போது நேரடியாக
-            உங்கள் வீட்டுக்கு.
-          </p>
           <div className="mt-10 grid grid-cols-3 gap-6">
             <div>
               <p className="font-display text-4xl text-forest tabular-nums">
@@ -564,9 +530,6 @@ function PriceLadder() {
             <h2 className="mt-4 font-display text-[clamp(1.75rem,3.6vw,2.75rem)]">
               {formatWeight(PRODUCT.baseWeightGrams)} = {formatINR(PRODUCT.basePrice)}
             </h2>
-            <p className="font-tamil text-warm" lang="ta">
-              250 கிராம் = ₹300 · 50 கிராம் அளவில் எந்த எடையும்
-            </p>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">
             Order any quantity from 250 g upwards in 50 g steps. Shipping is a flat{" "}
@@ -615,9 +578,6 @@ function PriceLadder() {
               <s.icon className="size-5 shrink-0 text-palm" strokeWidth={1.5} />
               <div>
                 <p className="text-sm font-semibold text-forest">{s.en}</p>
-                <p className="font-tamil text-xs text-warm" lang="ta">
-                  {s.ta}
-                </p>
               </div>
             </div>
           ))}
@@ -677,9 +637,6 @@ function Faq() {
               <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                 <span>
                   <span className="font-display text-lg text-forest">{q}</span>
-                  <span className="font-tamil block text-sm text-warm" lang="ta">
-                    {qta}
-                  </span>
                 </span>
                 <span className="mt-1 text-gold transition-transform duration-300 group-open:rotate-45">
                   +
@@ -760,9 +717,6 @@ function LeadBanner() {
         <h2 className="mt-4 font-display text-[clamp(1.9rem,4.2vw,3rem)] text-primary-foreground">
           Send your order on WhatsApp
         </h2>
-        <p className="font-tamil mt-2 text-primary-foreground/80" lang="ta">
-          வாட்ஸ்அப்பில் ஆர்டர் அனுப்புங்கள் — நாங்கள் உடனே பதிலளிப்போம்.
-        </p>
         <p className="mx-auto mt-4 max-w-xl text-sm text-primary-foreground/80">
           Your message already includes the product photo, weight, price and your delivery
           address. We confirm availability and the final total right there.

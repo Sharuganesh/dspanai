@@ -73,9 +73,6 @@ function Header() {
             >
 
               {item.label}
-              <span className="font-tamil block text-[11px] font-normal text-warm" lang="ta">
-                {item.ta}
-              </span>
               <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gold transition-all duration-400 group-hover:w-full" />
             </Link>
           ))}
@@ -156,9 +153,6 @@ function Header() {
                   }}
                 >
                   <span className="font-display text-2xl leading-none">{item.label}</span>
-                  <span className="font-tamil text-sm leading-none text-warm" lang="ta">
-                    {item.ta}
-                  </span>
                 </Link>
               </li>
             ))}

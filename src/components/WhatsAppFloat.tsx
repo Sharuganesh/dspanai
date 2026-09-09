@@ -17,9 +17,6 @@ export function WhatsAppFloat() {
       </span>
       <span className="hidden text-left text-xs leading-tight font-bold sm:block">
         Order on WhatsApp
-        <span className="font-tamil block text-[10px] font-medium opacity-80" lang="ta">
-          வாட்ஸ்அப்பில் ஆர்டர்
-        </span>
       </span>
     </a>
   );

@@ -94,9 +94,6 @@ export function LeadPopup() {
             <h2 className="mt-3 font-display text-3xl leading-tight">
               Get our palm candy price list on WhatsApp
             </h2>
-            <p className="font-tamil mt-2 text-sm text-warm" lang="ta">
-              பனங்கற்கண்டு விலை பட்டியலை வாட்ஸ்அப்பில் பெறுங்கள்
-            </p>
             <p className="mt-4 text-sm text-muted-foreground">
               Share your name and WhatsApp number — we send weights, prices from{" "}
               {formatINR(PRODUCT.basePrice)} / 250 g, and current availability. Shipping across

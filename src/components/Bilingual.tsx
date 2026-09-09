@@ -24,8 +24,5 @@ export function Bi({
 /** Tamil product name, used sparingly (once, beside the product name). */
 export function Ta({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span className={className} lang="ta">
-      {children}
-    </span>
   );
 }
