@@ -55,7 +55,7 @@ function Header() {
       className={cn(
         "sticky top-0 z-40 transition-all duration-500",
         scrolled
-          ? "border-b border-border/70 bg-ivory/80 backdrop-blur-xl supports-[backdrop-filter]:bg-cream/70"
+          ? "border-b border-border/70 bg-ivory/80 backdrop-blur-xl supports-[backdrop-filter]:bg-cream"
           : "bg-transparent",
       )}
     >

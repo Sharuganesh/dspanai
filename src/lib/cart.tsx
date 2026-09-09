@@ -75,8 +75,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const rawDetails = localStorage.getItem(DETAILS_KEY);
       if (rawDetails) setDetailsState({ ...EMPTY_DETAILS, ...JSON.parse(rawDetails) });
     } catch {
-      /* ignore malformed storage */
-    }
+      /* ignore malformed storage *}
     setHydrated(true);
   }, []);
 
@@ -90,8 +89,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(DETAILS_KEY, JSON.stringify(next));
     } catch {
-      /* ignore */
-    }
+      /* ignore *}
   }, []);
 
   const addLine = useCallback((weightGrams: number, quantity = 1) => {

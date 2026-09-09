@@ -24,7 +24,7 @@ export const BRAND = {
   name: "D's PANAI",
   tamilName: "D's பனை",
   whatsappNumber: "+91 96778 92457",
-  whatsappLink: "https://wa.me/919677892457",
+  whatsappLink: "https://wa.me",
   instagramHandle: "@dspanai",
   instagramUrl: "https://instagram.com/",
   email: "hello@dspanai.com",
@@ -72,7 +72,7 @@ export function calculatePrice(weightGrams: number): number {
 export function formatWeight(grams: number): string {
   if (grams >= 1000) {
     const kg = grams / 1000;
-    return `${Number.isInteger(kg) ? kg : kg.toFixed(2).replace(/0$/, "")} kg`;
+    return `${Number.isInteger(kg) ? kg : kg.toFixed(2).replace(/0$"")} kg`;
   }
   return `${grams} g`;
 }

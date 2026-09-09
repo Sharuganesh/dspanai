@@ -78,7 +78,7 @@ function Purity() {
         </div>
       </section>
 
-      <section className="mt-10 border-y border-border bg-cream/50">
+      <section className="mt-10 border-y border-border bg-cream">
         <div className="mx-auto grid max-w-[1240px] gap-10 px-6 py-20 md:px-8 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <img

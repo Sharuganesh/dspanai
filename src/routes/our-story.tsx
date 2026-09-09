@@ -78,7 +78,7 @@ function OurStory() {
         </Reveal>
       </section>
 
-      <section className="border-y border-border bg-cream/50">
+      <section className="border-y border-border bg-cream">
         <div className="mx-auto max-w-[1240px] px-6 py-20 md:px-8">
           <h2 className="font-display text-3xl">How it has moved forward</h2>
           <ol className="mt-10 space-y-2">
