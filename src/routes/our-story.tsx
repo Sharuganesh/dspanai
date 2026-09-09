@@ -58,7 +58,7 @@ function OurStory() {
           </p>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
             The name joins our founder Divya's initial with{" "}
-            <span className="font-tamil text-forest">பனை</span> — the palmyra palm at the heart of
+            <span className="font-tamil text-forest"></span> — the palmyra palm at the heart of
             everything we sell.
           </p>
           <div className="mt-10">

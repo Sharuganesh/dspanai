@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "D's PANAI | Pure Panangarkandu | பனங்கற்கண்டு" },
+      { title: "D's PANAI | Pure Panangarkandu" },
       {
         name: "description",
         content:

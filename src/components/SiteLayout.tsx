@@ -10,11 +10,11 @@ import { LeadPopup } from "./LeadPopup";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Home", ta: "முகப்பு" },
-  { to: "/shop", label: "Shop", ta: "கடை" },
-  { to: "/our-story", label: "Our Story", ta: "எங்கள் கதை" },
-  { to: "/purity", label: "Purity", ta: "தூய்மை" },
-  { to: "/contact", label: "Contact", ta: "தொடர்பு" },
+  { to: "/", label: "Home", ta: "" },
+  { to: "/shop", label: "Shop", ta: "" },
+  { to: "/our-story", label: "Our Story", ta: "" },
+  { to: "/purity", label: "Purity", ta: "" },
+  { to: "/contact", label: "Contact", ta: "" },
 ] as const;
 
 
@@ -22,7 +22,7 @@ function AnnouncementBar() {
   return (
     <div className="bg-forest px-4 py-2 text-center">
       <p className="text-[11px] font-medium tracking-[0.14em] text-primary-foreground/90 uppercase">
-        Pure Panangarkandu (Palm Candy) · பனங்கற்கண்டு · Worldwide shipping
+        Pure Panangarkandu (Palm Candy)· Worldwide shipping
       </p>
     </div>
   );
