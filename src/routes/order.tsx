@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Copy, Loader2 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/Brand";
 import { EMPTY_DETAILS, useCart, type CustomerDetails } from "@/lib/cart";
-import { IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
+import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
 import { buildOrderMessage, whatsappUrl } from "@/lib/whatsapp";
+import { placeOrder } from "@/lib/orders.functions";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/order")({
@@ -60,11 +62,15 @@ const FIELDS: FieldDef[] = [
 ];
 
 function OrderPage() {
-  const { lines, subtotal, details, setDetails } = useCart();
+  const { lines, subtotal, details, setDetails, clearCart } = useCart();
   const [step, setStep] = useState<"details" | "review">("details");
   const [confirmed, setConfirmed] = useState(false);
   const [touched, setTouched] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [placing, setPlacing] = useState(false);
+  const [placed, setPlaced] = useState<{ orderId: string; emailed: boolean } | null>(null);
+  const [orderError, setOrderError] = useState<string | null>(null);
+  const submitOrder = useServerFn(placeOrder);
 
   const message = useMemo(() => buildOrderMessage(lines, details), [lines, details]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
@@ -72,6 +78,91 @@ function OrderPage() {
 
   const update = (key: keyof CustomerDetails, value: string) =>
     setDetails({ ...(details ?? EMPTY_DETAILS), [key]: value });
+
+  const handlePlaceOrder = async () => {
+    setPlacing(true);
+    setOrderError(null);
+    try {
+      const res = await submitOrder({
+        data: {
+          fullName: details.fullName,
+          mobile: details.mobile,
+          whatsapp: details.whatsapp || details.mobile,
+          email: details.email,
+          address: details.address,
+          city: details.city,
+          state: details.state,
+          pincode: details.pincode,
+          landmark: details.landmark,
+          instructions: details.instructions,
+          items: lines.map((l) => ({
+            weightGrams: l.weightGrams,
+            quantity: l.quantity,
+            unitPrice: calculatePrice(l.weightGrams),
+            lineTotal: calculatePrice(l.weightGrams) * l.quantity,
+          })),
+          productTotal: subtotal,
+          shipping: BRAND.shippingIndia,
+          total: subtotal + BRAND.shippingIndia,
+        },
+      });
+      setPlaced({ orderId: res.orderId, emailed: res.emailedCustomer });
+      clearCart();
+    } catch (err) {
+      setOrderError(
+        err instanceof Error ? err.message : "We could not place the order. Please try again.",
+      );
+    } finally {
+      setPlacing(false);
+    }
+  };
+
+  if (placed) {
+    return (
+      <div className="mx-auto max-w-[760px] px-6 py-20 md:px-8 md:py-28">
+        <div className="surface-card p-8 text-center md:p-12">
+          <span className="mx-auto grid size-14 place-items-center rounded-full bg-forest text-primary-foreground">
+            <Check className="size-7" />
+          </span>
+          <h1 className="mt-6 font-display text-[clamp(1.9rem,4.5vw,2.75rem)]">
+            Order placed. Thank you!
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            We have your order and will contact you shortly to confirm availability, the final
+            amount and dispatch.
+          </p>
+          <div className="mt-8 rounded-2xl border border-border bg-ivory p-6">
+            <p className="eyebrow">Your order ID</p>
+            <p className="mt-2 font-display text-3xl text-forest">{placed.orderId}</p>
+          </div>
+          <p className="mt-5 text-xs text-muted-foreground">
+            {placed.emailed
+              ? "Your invoice PDF and a thank-you note have been emailed to you."
+              : "Add an email next time and we will send your invoice PDF automatically."}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href={whatsappUrl(
+                `Hello ${BRAND.name}, I just placed order ${placed.orderId} on your website.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase"
+            >
+              <WhatsAppIcon className="size-5" />
+              Message us on WhatsApp
+            </a>
+            <Link
+              to="/shop"
+              className="rounded-full border border-forest/25 px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase hover:bg-cream"
+            >
+              Continue shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (lines.length === 0) {
     return (
@@ -213,7 +304,6 @@ function OrderPage() {
                     />
                     <div className="text-sm">
                       <p className="font-semibold text-forest">{PRODUCT.name}</p>
-                      <p className="font-tamil text-xs text-warm">{PRODUCT.tamilName}</p>
                       <p className="mt-1 text-muted-foreground">
                         {formatWeight(l.weightGrams)} · Qty {l.quantity}
                       </p>
@@ -280,14 +370,24 @@ function OrderPage() {
 
           <aside className="surface-card p-6 lg:sticky lg:top-28">
             <OrderSummary />
+            <button
+              type="button"
+              disabled={placing}
+              onClick={handlePlaceOrder}
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-[1.02] disabled:opacity-60"
+            >
+              {placing && <Loader2 className="size-4 animate-spin" />}
+              {placing ? "Placing order" : "Place order"}
+            </button>
+            {orderError && <p className="mt-3 text-xs text-destructive">{orderError}</p>}
             <a
               href={whatsappUrl(message)}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-[1.02]"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-forest/25 px-6 py-3.5 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream"
             >
-              <WhatsAppIcon className="size-5" />
-              Order on WhatsApp
+              <WhatsAppIcon className="size-4" />
+              Or order on WhatsApp
             </a>
             <button
               type="button"

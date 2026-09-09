@@ -6,23 +6,22 @@ import { useCart } from "@/lib/cart";
 import { CartDrawer } from "./CartDrawer";
 import { Logo, WhatsAppIcon } from "./Brand";
 import { WhatsAppFloat } from "./WhatsAppFloat";
-import { LeadPopup } from "./LeadPopup";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Home", ta: "முகப்பு" },
-  { to: "/shop", label: "Shop", ta: "கடை" },
-  { to: "/our-story", label: "Our Story", ta: "எங்கள் கதை" },
-  { to: "/purity", label: "Purity", ta: "தூய்மை" },
-  { to: "/contact", label: "Contact", ta: "தொடர்பு" },
+  { to: "/", label: "Home" },
+  { to: "/shop", label: "Shop" },
+  { to: "/our-story", label: "Our Story" },
+  { to: "/purity", label: "Purity" },
+  { to: "/contact", label: "Contact" },
 ] as const;
 
 
 function AnnouncementBar() {
   return (
-    <div className="bg-forest px-4 py-2 text-center">
-      <p className="text-[11px] font-medium tracking-[0.14em] text-primary-foreground/90 uppercase">
-        Pure Panangarkandu (Palm Candy) · பனங்கற்கண்டு · Worldwide shipping
+    <div className="overflow-hidden bg-forest px-4 py-2 text-center">
+      <p className="animate-marquee inline-block whitespace-nowrap text-[11px] font-medium tracking-[0.14em] text-primary-foreground/90 uppercase md:animate-none">
+        Pure Palm Candy · Free order support on WhatsApp · Worldwide shipping
       </p>
     </div>
   );
@@ -73,9 +72,6 @@ function Header() {
             >
 
               {item.label}
-              <span className="font-tamil block text-[11px] font-normal text-warm" lang="ta">
-                {item.ta}
-              </span>
               <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gold transition-all duration-400 group-hover:w-full" />
             </Link>
           ))}
@@ -156,9 +152,6 @@ function Header() {
                   }}
                 >
                   <span className="font-display text-2xl leading-none">{item.label}</span>
-                  <span className="font-tamil text-sm leading-none text-warm" lang="ta">
-                    {item.ta}
-                  </span>
                 </Link>
               </li>
             ))}
@@ -196,7 +189,7 @@ function Footer() {
       <div className="mx-auto grid max-w-[1240px] gap-10 px-6 py-16 md:grid-cols-4 md:px-8">
         <div>
           <h3 className="font-display text-2xl">{BRAND.name}</h3>
-          <p className="font-tamil mt-1 text-sm text-warm">{PRODUCT.tamilName}</p>
+          <p className="mt-1 text-sm tracking-[0.2em] text-gold uppercase">Palm Candy</p>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             Pure Panangarkandu (palm candy) from a family trade of {BRAND.yearsInTrade}+ years,
             packed in a plastic-free primary cloth pouch. Shipped across India (
@@ -290,7 +283,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <Footer />
       <CartDrawer />
       <WhatsAppFloat />
-      <LeadPopup />
     </div>
   );
 }

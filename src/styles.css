@@ -48,23 +48,23 @@
   --color-sand: var(--sand);
   --color-ink: var(--ink);
 
-  --shadow-soft: 0 1px 2px oklch(0.316 0.054 157.5 / 0.04), 0 12px 32px -12px oklch(0.316 0.054 157.5 / 0.16);
-  --shadow-lift: 0 2px 4px oklch(0.316 0.054 157.5 / 0.05), 0 28px 60px -24px oklch(0.316 0.054 157.5 / 0.28);
-  --shadow-gold: 0 0 0 1px oklch(0.691 0.096 82.6 / 0.35);
+  --shadow-soft: 0 1px 2px rgb(26 23 20 / 0.05), 0 12px 32px -12px rgb(26 23 20 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(26 23 20 / 0.06), 0 28px 60px -24px rgb(26 23 20 / 0.24);
+  --shadow-gold: 0 0 0 1px rgb(180 96 31 / 0.3);
 }
 
 :root {
   --radius: 0.875rem;
 
-  --cream: oklch(0.96 0.017 84.6);
-  --ivory: oklch(0.985 0.008 91.5);
-  --palm: oklch(0.357 0.056 154.2);
-  --forest: oklch(0.316 0.054 157.5);
-  --gold: oklch(0.691 0.096 82.6);
-  --earth: oklch(0.436 0.055 59.3);
-  --warm: oklch(0.542 0.064 63.2);
-  --sand: oklch(0.899 0.031 81.7);
-  --ink: oklch(0.232 0.019 151.5);
+  --cream: #F7F0E4;
+  --ivory: #FFFDF8;
+  --palm: #3A322C;
+  --forest: #1A1714;
+  --gold: #B4601F;
+  --earth: #8C5A28;
+  --warm: #8A7B6B;
+  --sand: #E0B872;
+  --ink: #1A1714;
 
   --background: var(--ivory);
   --foreground: var(--ink);
@@ -73,22 +73,22 @@
   --popover: var(--ivory);
   --popover-foreground: var(--ink);
   --primary: var(--forest);
-  --primary-foreground: oklch(0.985 0.008 91.5);
+  --primary-foreground: #FFFDF8;
   --secondary: var(--cream);
   --secondary-foreground: var(--forest);
   --muted: var(--cream);
-  --muted-foreground: oklch(0.5 0.03 120);
+  --muted-foreground: #6F6459;
   --accent: var(--sand);
   --accent-foreground: var(--forest);
   --destructive: oklch(0.55 0.19 27);
-  --destructive-foreground: oklch(0.985 0.008 91.5);
-  --border: oklch(0.899 0.031 81.7);
-  --input: oklch(0.899 0.031 81.7);
+  --destructive-foreground: #FFFDF8;
+  --border: #E8DFCF;
+  --input: #E8DFCF;
   --ring: var(--gold);
 
   --gradient-cream: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
   --gradient-forest: linear-gradient(135deg, var(--forest) 0%, var(--palm) 100%);
-  --gradient-gold: linear-gradient(100deg, var(--gold) 0%, oklch(0.79 0.07 85) 50%, var(--gold) 100%);
+  --gradient-gold: linear-gradient(100deg, var(--gold) 0%, #E0B872 50%, var(--gold) 100%);
 }
 
 @layer base {
@@ -227,7 +227,7 @@
 @utility ornate-frame {
   border: 1px solid var(--color-border);
   box-shadow:
-    0 0 0 1px oklch(0.691 0.096 82.6 / 0.28) inset,
+    0 0 0 1px rgb(224 184 114 / 0.35) inset,
     var(--shadow-soft);
   border-radius: var(--radius-2xl);
 }
@@ -236,7 +236,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid oklch(0.691 0.096 82.6 / 0.45);
+  border: 1px solid rgb(180 96 31 / 0.35);
   border-radius: 999px;
   padding: 0.3rem 0.85rem;
   font-size: 0.6875rem;
@@ -244,7 +244,7 @@
   text-transform: uppercase;
   font-weight: 600;
   color: var(--color-earth);
-  background: oklch(0.985 0.008 91.5 / 0.7);
+  background: rgb(255 253 248 / 0.72);
 }
 
 @utility caption {
@@ -257,4 +257,69 @@
 /* Hide the floating WhatsApp button while the mobile menu is open */
 body[data-menu-open] .wa-float {
   display: none;
+}
+
+/* --- Motion & polish --- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(180 96 31 / 0.38); }
+  50% { box-shadow: 0 0 0 14px rgb(180 96 31 / 0); }
+}
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+@utility animate-marquee { animation: marquee 26s linear infinite; }
+@utility animate-floaty { animation: floaty 6s ease-in-out infinite; }
+@utility animate-glow { animation: pulseGlow 2.8s ease-out infinite; }
+@utility animate-spin-slow { animation: spinSlow 40s linear infinite; }
+
+@utility text-gradient {
+  background: linear-gradient(96deg, #1A1714 0%, #B4601F 55%, #E0B872 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility lift-card {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@utility lift-card-hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+}
+
+@utility shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 5s linear infinite;
+  pointer-events: none;
+}
+
+@utility status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }

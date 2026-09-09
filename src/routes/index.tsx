@@ -20,7 +20,7 @@ import { useCart } from "@/lib/cart";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "D's PANAI | Pure Panangarkandu Palm Candy | பனங்கற்கண்டு" },
+      { title: "D's PANAI | Pure Panangarkandu Palm Candy" },
       {
         name: "description",
         content:
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Product",
           name: PRODUCT.name,
-          alternateName: "பனங்கற்கண்டு",
+          alternateName: "",
           category: "Palm Candy",
           description: PRODUCT.longDescription,
           brand: { "@type": "Brand", name: BRAND.name },
@@ -81,8 +81,7 @@ function Hero() {
       <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 pt-12 pb-16 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:pt-20 lg:pb-24">
         <div>
           <p className="section-label animate-rise" style={{ animationDelay: "60ms" }}>
-            Palm Candy · பனங்கற்கண்டு
-          </p>
+            Palm Candy</p>
           <h1
             className="animate-rise mt-5 font-display text-[clamp(2.5rem,6.6vw,4.5rem)] leading-[1.02]"
             style={{ animationDelay: "160ms" }}
@@ -92,22 +91,11 @@ function Hero() {
             <span className="text-palm italic">carried forward.</span>
           </h1>
           <p
-            className="font-tamil animate-rise mt-3 text-lg text-warm md:text-xl"
-            lang="ta"
-            style={{ animationDelay: "220ms" }}
-          >
-            தலைமுறைகளாக தொடரும் பாரம்பரிய இனிப்பு — தூய பனங்கற்கண்டு.
-          </p>
-          <p
             className="animate-rise mt-6 max-w-lg text-base leading-relaxed text-muted-foreground md:text-lg"
             style={{ animationDelay: "300ms" }}
           >
             Pure Panangarkandu (palm candy) from a family trade of {BRAND.yearsInTrade}+ years —
             packed in a plastic-free cloth pouch and delivered to your door.
-          </p>
-          <p className="font-tamil mt-2 max-w-lg text-sm text-warm" lang="ta">
-            {BRAND.yearsInTrade}+ ஆண்டு குடும்பத் தொழில். இப்போது ஆன்லைனில் — உலகம்
-            முழுவதும் அனுப்பப்படுகிறது.
           </p>
 
           <div
@@ -119,8 +107,7 @@ function Hero() {
               params={{ slug: PRODUCT.slug }}
               className="group inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all duration-300 hover:shadow-lift"
             >
-              Order now · ஆர்டர் செய்ய
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              Order now<span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
             <a
               href={BRAND.whatsappLink}
@@ -154,8 +141,7 @@ function Hero() {
               className="ornate-frame w-full object-cover shadow-lift"
             />
             <p className="caption mt-3 text-center">
-              Our 250 g cloth pouch · எங்கள் துணிப் பை
-            </p>
+              Our 250 g cloth pouch</p>
             <div className="absolute -bottom-2 -left-3 rounded-2xl border border-gold/40 bg-ivory/95 px-5 py-3 shadow-soft backdrop-blur md:-left-10">
               <p className="eyebrow">Starting at</p>
               <p className="font-display text-2xl text-forest">
@@ -174,25 +160,25 @@ const TRUST = [
   {
     icon: Leaf,
     en: "25+ years family trade",
-    ta: "25+ ஆண்டு குடும்பத் தொழில்",
+    ta: "",
     body: "The same trade our family has run for over two decades — now online.",
   },
   {
     icon: Sparkles,
     en: "Pure palm candy only",
-    ta: "தூய பனங்கற்கண்டு மட்டும்",
+    ta: "",
     body: "One product, chosen and packed carefully. No mixing, no fillers.",
   },
   {
     icon: Package,
     en: "Plastic-free cloth pouch",
-    ta: "பிளாஸ்டிக் இல்லாத துணிப் பை",
+    ta: "",
     body: "Primary packing is a traditional drawstring cloth pouch.",
   },
   {
     icon: Globe2,
     en: "Worldwide shipping",
-    ta: "உலகம் முழுவதும் அனுப்புகிறோம்",
+    ta: "",
     body: `India ${formatINR(BRAND.shippingIndia)} · International ${formatINR(BRAND.shippingInternational)}.`,
   },
 ];
@@ -205,9 +191,6 @@ function TrustStrip() {
           <Reveal key={item.en} delay={i * 90} className="surface-card p-6">
             <item.icon className="size-6 text-palm" strokeWidth={1.5} />
             <h3 className="mt-4 text-lg leading-snug">{item.en}</h3>
-            <p className="font-tamil mt-1 text-sm text-warm" lang="ta">
-              {item.ta}
-            </p>
             <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
           </Reveal>
         ))}
@@ -223,12 +206,12 @@ function WhatIsIt() {
     <section className="mx-auto max-w-[1240px] px-6 py-20 md:px-8 md:py-24">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
         <Reveal>
-          <p className="section-label">The tradition · பாரம்பரியம்</p>
+          <p className="section-label">The tradition</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
             en="What is Panangarkandu?"
-            ta="பனங்கற்கண்டு என்றால் என்ன?"
+            ta="?"
             taClassName="text-lg"
           />
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
@@ -237,24 +220,17 @@ function WhatIsIt() {
             coffee, stirred into warm milk, added to kashayam, or simply given to children as a
             treat.
           </p>
-          <p className="font-tamil mt-4 text-base leading-relaxed text-warm" lang="ta">
-            பனங்கற்கண்டு என்பது பனை மரத்தின் பதநீரிலிருந்து இயற்கையாக உருவாகும் கற்கண்டு.
-            காபி, பால், கசாயம் என தமிழ் வீடுகளில் தலைமுறைகளாக பயன்படுத்தப்படும் இனிப்பு.
-          </p>
           <ul className="mt-7 space-y-3 text-sm">
             {[
-              ["Naturally formed crystals", "இயற்கையாக உருவான கற்கண்டு"],
-              ["No added colour or flavour", "செயற்கை நிறம், சுவை சேர்க்கப்படவில்லை"],
-              ["Traditional Tamil kitchen staple", "தமிழ் சமையலறையின் பாரம்பரிய பொருள்"],
-              ["Sold by weight, from 250 g", "250 கிராம் முதல் எடையின்படி விற்பனை"],
+              ["Naturally formed crystals", ""],
+              ["No added colour or flavour", ""],
+              ["Traditional Tamil kitchen staple", ""],
+              ["Sold by weight, from 250 g", ""],
             ].map(([en, ta]) => (
               <li key={en} className="flex gap-3">
                 <span className="mt-1 text-gold">✦</span>
                 <span>
                   <span className="font-semibold text-forest">{en}</span>
-                  <span className="font-tamil block text-warm" lang="ta">
-                    {ta}
-                  </span>
                 </span>
               </li>
             ))}
@@ -270,8 +246,7 @@ function WhatIsIt() {
             className="ornate-frame w-full object-cover"
           />
           <p className="caption mt-3">
-            Macro: the natural crystal structure · கற்கண்டு படிகங்கள்
-          </p>
+            Macro: the natural crystal structure</p>
         </Reveal>
       </div>
     </section>
@@ -289,12 +264,12 @@ function FeaturedProduct() {
     <section className="border-y border-border bg-cream/50">
       <div className="mx-auto max-w-[1240px] px-6 py-20 md:px-8 md:py-24">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-label">The product · பொருள்</p>
+          <p className="section-label">The product</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
             en="One pouch. One tradition."
-            ta="ஒரு பை. ஒரே பாரம்பரியம்."
+            ta=""
             taClassName="text-lg"
           />
           <Ornament className="mt-6" />
@@ -315,14 +290,11 @@ function FeaturedProduct() {
                 Signature cloth pouch
               </span>
             </div>
-            <p className="caption mt-3">Product photo · பொருள் புகைப்படம்</p>
+            <p className="caption mt-3">Product photo</p>
           </div>
 
           <div>
             <h3 className="font-display text-3xl md:text-4xl">{PRODUCT.name}</h3>
-            <p className="font-tamil mt-1 text-lg text-warm" lang="ta">
-              {PRODUCT.tamilName} — பனை கற்கண்டு
-            </p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
               {PRODUCT.description}
             </p>
@@ -339,8 +311,7 @@ function FeaturedProduct() {
                 onClick={() => addLine(weight, qty)}
                 className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all duration-300 hover:shadow-lift"
               >
-                Add to cart · கூடையில் சேர்
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                Add to cart<span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </button>
@@ -365,25 +336,25 @@ const USES = [
   {
     icon: Coffee,
     en: "In filter coffee & tea",
-    ta: "காபி மற்றும் தேநீரில்",
+    ta: "",
     body: "A crystal or two instead of refined sugar in your morning degree coffee.",
   },
   {
     icon: Sparkles,
     en: "In warm milk",
-    ta: "சுடு பாலில்",
+    ta: "",
     body: "The classic way children in Tamil homes are given palm candy.",
   },
   {
     icon: Leaf,
     en: "With kashayam & herbal drinks",
-    ta: "கசாயம் மற்றும் மூலிகை பானங்களில்",
+    ta: "",
     body: "Traditionally added to home-made kashayam for taste.",
   },
   {
     icon: ShieldCheck,
     en: "Just as it is",
-    ta: "அப்படியே சாப்பிடலாம்",
+    ta: "",
     body: "Kept in a jar and eaten plain, the way it always has been.",
   },
 ];
@@ -401,15 +372,15 @@ function WaysToUse() {
             loading="lazy"
             className="ornate-frame w-full object-cover"
           />
-          <p className="caption mt-3">Everyday use at home · வீட்டில் பயன்பாடு</p>
+          <p className="caption mt-3">Everyday use at home</p>
         </Reveal>
         <Reveal delay={120}>
-          <p className="section-label">How families use it · பயன்படுத்தும் முறை</p>
+          <p className="section-label">How families use it</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
             en="Four ways palm candy is used"
-            ta="பனங்கற்கண்டு பயன்படுத்தும் நான்கு வழிகள்"
+            ta=""
             taClassName="text-lg"
           />
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -417,9 +388,6 @@ function WaysToUse() {
               <div key={u.en} className="surface-card p-5">
                 <u.icon className="size-5 text-palm" strokeWidth={1.5} />
                 <h3 className="mt-3 text-base leading-snug">{u.en}</h3>
-                <p className="font-tamil text-sm text-warm" lang="ta">
-                  {u.ta}
-                </p>
                 <p className="mt-2 text-sm text-muted-foreground">{u.body}</p>
               </div>
             ))}
@@ -433,10 +401,10 @@ function WaysToUse() {
 /* --------------------------------------------------------- HOW WE PACK IT
    Image used here: IMAGES.pouch — detail of the drawstring cloth pouch. */
 const STEPS = [
-  ["Selected by hand", "கையால் தேர்வு", "Crystals are sorted so only clean, well-formed pieces are packed."],
-  ["Weighed to your order", "உங்கள் எடைக்கேற்ப", "From 250 g upwards in 50 g steps — you choose the exact weight."],
-  ["Packed in cloth", "துணிப் பையில்", "Filled into our plastic-free drawstring cloth pouch."],
-  ["Shipped & confirmed", "அனுப்பி உறுதி", "Outer protective packing, then dispatched and confirmed on WhatsApp."],
+  ["Selected by hand", "", "Crystals are sorted so only clean, well-formed pieces are packed."],
+  ["Weighed to your order", "", "From 250 g upwards in 50 g steps — you choose the exact weight."],
+  ["Packed in cloth", "", "Filled into our plastic-free drawstring cloth pouch."],
+  ["Shipped & confirmed", "", "Outer protective packing, then dispatched and confirmed on WhatsApp."],
 ];
 
 function HowWePack() {
@@ -450,7 +418,7 @@ function HowWePack() {
               as="h2"
               className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
               en="How your pouch is prepared"
-              ta="உங்கள் பை எப்படி தயாராகிறது"
+              ta=""
               taClassName="text-lg"
             />
             <ol className="mt-8 space-y-6">
@@ -461,9 +429,6 @@ function HowWePack() {
                   </span>
                   <div className="border-l border-border pl-5">
                     <h3 className="text-lg leading-snug">{en}</h3>
-                    <p className="font-tamil text-sm text-warm" lang="ta">
-                      {ta}
-                    </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">{body}</p>
                   </div>
                 </li>
@@ -479,7 +444,7 @@ function HowWePack() {
               loading="lazy"
               className="ornate-frame w-full object-cover"
             />
-            <p className="caption mt-3">Pouch detail · துணிப் பை நெருக்கம்</p>
+            <p className="caption mt-3">Pouch detail</p>
           </Reveal>
         </div>
       </div>
@@ -502,25 +467,21 @@ function HeritageScale() {
             loading="lazy"
             className="ornate-frame w-full object-cover"
           />
-          <p className="caption mt-3">Our family trade · எங்கள் குடும்பத் தொழில்</p>
+          <p className="caption mt-3">Our family trade</p>
         </Reveal>
         <Reveal delay={120}>
-          <p className="section-label">Our story · எங்கள் கதை</p>
+          <p className="section-label">Our story</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
             en="A family trade, now online."
-            ta="குடும்பத் தொழில், இப்போது ஆன்லைனில்."
+            ta=""
             taClassName="text-lg"
           />
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
             D's PANAI is not a new brand pretending to be traditional. It is a modern
             consumer-facing brand built on a family trade of more than {BRAND.yearsInTrade} years —
             the same Panangarkandu we have always supplied, now brought directly to your home.
-          </p>
-          <p className="font-tamil mt-4 text-base leading-relaxed text-warm" lang="ta">
-            {BRAND.yearsInTrade}+ ஆண்டுகளாக நாங்கள் செய்யும் அதே தொழில். இப்போது நேரடியாக
-            உங்கள் வீட்டுக்கு.
           </p>
           <div className="mt-10 grid grid-cols-3 gap-6">
             <div>
@@ -564,9 +525,6 @@ function PriceLadder() {
             <h2 className="mt-4 font-display text-[clamp(1.75rem,3.6vw,2.75rem)]">
               {formatWeight(PRODUCT.baseWeightGrams)} = {formatINR(PRODUCT.basePrice)}
             </h2>
-            <p className="font-tamil text-warm" lang="ta">
-              250 கிராம் = ₹300 · 50 கிராம் அளவில் எந்த எடையும்
-            </p>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">
             Order any quantity from 250 g upwards in 50 g steps. Shipping is a flat{" "}
@@ -602,22 +560,19 @@ function PriceLadder() {
             {
               icon: Truck,
               en: `India shipping ${formatINR(BRAND.shippingIndia)}`,
-              ta: "இந்தியா முழுவதும் ₹50",
+              ta: "",
             },
             {
               icon: Globe2,
               en: `International ${formatINR(BRAND.shippingInternational)}`,
-              ta: "வெளிநாடு ₹500",
+              ta: "",
             },
-            { icon: Scale, en: "Any weight, 50 g steps", ta: "50 கிராம் அளவில் எந்த எடையும்" },
+            { icon: Scale, en: "Any weight, 50 g steps", ta: "" },
           ].map((s) => (
             <div key={s.en} className="flex items-center gap-3 rounded-2xl border border-gold/30 bg-ivory px-5 py-4">
               <s.icon className="size-5 shrink-0 text-palm" strokeWidth={1.5} />
               <div>
                 <p className="text-sm font-semibold text-forest">{s.en}</p>
-                <p className="font-tamil text-xs text-warm" lang="ta">
-                  {s.ta}
-                </p>
               </div>
             </div>
           ))}
@@ -631,27 +586,27 @@ function PriceLadder() {
 const FAQS: [string, string, string][] = [
   [
     "Is Panangarkandu the same as palm candy?",
-    "பனங்கற்கண்டு என்பது பனை கற்கண்டுதானா?",
+    "?",
     "Yes. Panangarkandu is the Tamil name for palm candy — crystallised palmyra palm sap.",
   ],
   [
     "How do I place an order?",
-    "ஆர்டர் எப்படி செய்வது?",
+    "?",
     "Choose your weight, add it to the cart, fill in your delivery details and send the order to us on WhatsApp. We confirm availability and the final total there.",
   ],
   [
     "What are the shipping charges?",
-    "அனுப்பும் கட்டணம் என்ன?",
+    "?",
     `Flat ${formatINR(BRAND.shippingIndia)} anywhere in India and ${formatINR(BRAND.shippingInternational)} for international orders.`,
   ],
   [
     "Do I have to pay online?",
-    "ஆன்லைனில் பணம் செலுத்த வேண்டுமா?",
+    "?",
     "No. There is no online payment on this website. Payment is arranged with us directly on WhatsApp after your order is confirmed.",
   ],
   [
     "Can I order in bulk?",
-    "மொத்தமாக வாங்க முடியுமா?",
+    "?",
     "Yes — we handle large volumes every month. Send us your quantity and city on WhatsApp for a bulk quote.",
   ],
 ];
@@ -660,12 +615,12 @@ function Faq() {
   return (
     <section className="mx-auto max-w-[900px] px-6 py-20 md:px-8">
       <Reveal className="text-center">
-        <p className="section-label">Questions · கேள்விகள்</p>
+        <p className="section-label">Questions</p>
         <Bi
           as="h2"
           className="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)]"
           en="Frequently asked"
-          ta="அடிக்கடி கேட்கப்படும் கேள்விகள்"
+          ta=""
           taClassName="text-lg"
         />
         <Ornament className="mt-6" />
@@ -677,9 +632,6 @@ function Faq() {
               <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                 <span>
                   <span className="font-display text-lg text-forest">{q}</span>
-                  <span className="font-tamil block text-sm text-warm" lang="ta">
-                    {qta}
-                  </span>
                 </span>
                 <span className="mt-1 text-gold transition-transform duration-300 group-open:rotate-45">
                   +
@@ -711,7 +663,7 @@ function InstagramSection() {
           as="h2"
           className="mt-5 font-display text-[clamp(1.75rem,3.6vw,2.75rem)]"
           en="Inside the tradition"
-          ta="பாரம்பரியத்தின் உள்ளே"
+          ta=""
           taClassName="text-base"
         />
       </Reveal>
@@ -760,9 +712,6 @@ function LeadBanner() {
         <h2 className="mt-4 font-display text-[clamp(1.9rem,4.2vw,3rem)] text-primary-foreground">
           Send your order on WhatsApp
         </h2>
-        <p className="font-tamil mt-2 text-primary-foreground/80" lang="ta">
-          வாட்ஸ்அப்பில் ஆர்டர் அனுப்புங்கள் — நாங்கள் உடனே பதிலளிப்போம்.
-        </p>
         <p className="mx-auto mt-4 max-w-xl text-sm text-primary-foreground/80">
           Your message already includes the product photo, weight, price and your delivery
           address. We confirm availability and the final total right there.

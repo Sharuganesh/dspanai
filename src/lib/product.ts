@@ -22,12 +22,13 @@ export const IMAGES = {
 
 export const BRAND = {
   name: "D's PANAI",
-  tamilName: "D's பனை",
+  tamilName: "D's Panai",
   whatsappNumber: "+91 96778 92457",
   whatsappLink: "https://wa.me/919677892457",
   instagramHandle: "@dspanai",
   instagramUrl: "https://instagram.com/",
   email: "hello@dspanai.com",
+  ownerEmail: "divyaselvaraj339@gmail.com",
   monthlyVolumeKg: 2500,
   yearsInTrade: 25,
   shippingIndia: 50,
