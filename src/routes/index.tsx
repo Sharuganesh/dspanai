@@ -81,7 +81,8 @@ function Hero() {
       <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 pt-12 pb-16 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:pt-20 lg:pb-24">
         <div>
           <p className="section-label animate-rise" style={{ animationDelay: "60ms" }}>
-            Palm Candy</p>
+            Palm Candy · பனங்கற்கண்டு
+          </p>
           <h1
             className="animate-rise mt-5 font-display text-[clamp(2.5rem,6.6vw,4.5rem)] leading-[1.02]"
             style={{ animationDelay: "160ms" }}
@@ -107,7 +108,8 @@ function Hero() {
               params={{ slug: PRODUCT.slug }}
               className="group inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all duration-300 hover:shadow-lift"
             >
-              Order now<span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              Order now · ஆர்டர் செய்ய
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
             <a
               href={BRAND.whatsappLink}
@@ -141,7 +143,8 @@ function Hero() {
               className="ornate-frame w-full object-cover shadow-lift"
             />
             <p className="caption mt-3 text-center">
-              Our 250 g cloth pouch</p>
+              Our 250 g cloth pouch · எங்கள் துணிப் பை
+            </p>
             <div className="absolute -bottom-2 -left-3 rounded-2xl border border-gold/40 bg-ivory/95 px-5 py-3 shadow-soft backdrop-blur md:-left-10">
               <p className="eyebrow">Starting at</p>
               <p className="font-display text-2xl text-forest">
@@ -185,7 +188,7 @@ const TRUST = [
 
 function TrustStrip() {
   return (
-    <section className="border-y border-border bg-cream">
+    <section className="border-y border-border bg-cream/60">
       <div className="mx-auto grid max-w-[1240px] gap-4 px-6 py-12 sm:grid-cols-2 md:px-8 lg:grid-cols-4">
         {TRUST.map((item, i) => (
           <Reveal key={item.en} delay={i * 90} className="surface-card p-6">
@@ -206,7 +209,7 @@ function WhatIsIt() {
     <section className="mx-auto max-w-[1240px] px-6 py-20 md:px-8 md:py-24">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
         <Reveal>
-          <p className="section-label">The tradition</p>
+          <p className="section-label">The tradition · பாரம்பரியம்</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
@@ -246,7 +249,8 @@ function WhatIsIt() {
             className="ornate-frame w-full object-cover"
           />
           <p className="caption mt-3">
-            Macro: the natural crystal structure</p>
+            Macro: the natural crystal structure · கற்கண்டு படிகங்கள்
+          </p>
         </Reveal>
       </div>
     </section>
@@ -261,10 +265,10 @@ function FeaturedProduct() {
   const [qty, setQty] = useState(1);
 
   return (
-    <section className="border-y border-border bg-cream">
+    <section className="border-y border-border bg-cream/50">
       <div className="mx-auto max-w-[1240px] px-6 py-20 md:px-8 md:py-24">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-label">The product</p>
+          <p className="section-label">The product · பொருள்</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
@@ -290,7 +294,7 @@ function FeaturedProduct() {
                 Signature cloth pouch
               </span>
             </div>
-            <p className="caption mt-3">Product photo</p>
+            <p className="caption mt-3">Product photo · பொருள் புகைப்படம்</p>
           </div>
 
           <div>
@@ -311,7 +315,8 @@ function FeaturedProduct() {
                 onClick={() => addLine(weight, qty)}
                 className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all duration-300 hover:shadow-lift"
               >
-                Add to cart<span className="transition-transform duration-300 group-hover:translate-x-1">
+                Add to cart · கூடையில் சேர்
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </button>
@@ -372,10 +377,10 @@ function WaysToUse() {
             loading="lazy"
             className="ornate-frame w-full object-cover"
           />
-          <p className="caption mt-3">Everyday use at home</p>
+          <p className="caption mt-3">Everyday use at home · வீட்டில் பயன்பாடு</p>
         </Reveal>
         <Reveal delay={120}>
-          <p className="section-label">How families use it</p>
+          <p className="section-label">How families use it · பயன்படுத்தும் முறை</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
@@ -409,7 +414,7 @@ const STEPS = [
 
 function HowWePack() {
   return (
-    <section className="border-y border-border bg-cream">
+    <section className="border-y border-border bg-cream/50">
       <div className="mx-auto max-w-[1240px] px-6 py-20 md:px-8 md:py-24">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
           <Reveal>
@@ -444,7 +449,7 @@ function HowWePack() {
               loading="lazy"
               className="ornate-frame w-full object-cover"
             />
-            <p className="caption mt-3">Pouch detail</p>
+            <p className="caption mt-3">Pouch detail · துணிப் பை நெருக்கம்</p>
           </Reveal>
         </div>
       </div>
@@ -467,10 +472,10 @@ function HeritageScale() {
             loading="lazy"
             className="ornate-frame w-full object-cover"
           />
-          <p className="caption mt-3">Our family trade</p>
+          <p className="caption mt-3">Our family trade · எங்கள் குடும்பத் தொழில்</p>
         </Reveal>
         <Reveal delay={120}>
-          <p className="section-label">Our story</p>
+          <p className="section-label">Our story · எங்கள் கதை</p>
           <Bi
             as="h2"
             className="mt-5 font-display text-[clamp(2rem,4.5vw,3.1rem)] leading-tight"
@@ -517,7 +522,7 @@ function HeritageScale() {
 function PriceLadder() {
   const { addLine } = useCart();
   return (
-    <section className="border-y border-border bg-cream">
+    <section className="border-y border-border bg-cream/60">
       <div className="mx-auto max-w-[1240px] px-6 py-20 md:px-8">
         <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -615,7 +620,7 @@ function Faq() {
   return (
     <section className="mx-auto max-w-[900px] px-6 py-20 md:px-8">
       <Reveal className="text-center">
-        <p className="section-label">Questions</p>
+        <p className="section-label">Questions · கேள்விகள்</p>
         <Bi
           as="h2"
           className="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)]"
@@ -712,7 +717,7 @@ function LeadBanner() {
         <h2 className="mt-4 font-display text-[clamp(1.9rem,4.2vw,3rem)] text-primary-foreground">
           Send your order on WhatsApp
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-sm text-primary-foreground">
+        <p className="mx-auto mt-4 max-w-xl text-sm text-primary-foreground/80">
           Your message already includes the product photo, weight, price and your delivery
           address. We confirm availability and the final total right there.
         </p>
@@ -728,7 +733,7 @@ function LeadBanner() {
           </a>
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/35 px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-colors hover:bg-primary-foreground"
+            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/35 px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-colors hover:bg-primary-foreground/10"
           >
             Browse weights
           </Link>

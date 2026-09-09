@@ -19,7 +19,7 @@ export const Route = createFileRoute("/shipping")({
   component: () => (
     <LegalPage
       title="Shipping & Delivery"
-      intro="We ship Pure Panangarkandu (palm candy) across India and worldwide. Flat ₹50 shipping within India and ₹500 for international orders."
+      intro="We ship Pure Panangarkandu (palm candy) across India and worldwide. Flat ₹50 shipping within India and ₹500 for international orders. / இந்தியாவில் ₹50, வெளிநாட்டுக்கு ₹500."
       sections={[
         {
           heading: "Shipping charges",
