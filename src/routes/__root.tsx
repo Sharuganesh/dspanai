@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "D's PANAI brings traditional Pure Panangarkandu (Palm Candy) from a family tradition to your home, packed in a simple traditional cloth pouch.",
       },
       { name: "author", content: "D's PANAI" },
-      { name: "theme-color", content: "#173A27" },
+      { name: "theme-color", content: "#1A1714" },
       { property: "og:title", content: "D's PANAI — Pure Panangarkandu" },
       {
         property: "og:description",
@@ -103,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Mukta:wght@300;400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Mukta:wght@300;400;500;600;700;800&display=swap",
       },
     ],
   }),

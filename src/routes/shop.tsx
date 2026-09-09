@@ -56,7 +56,6 @@ function Shop() {
         </Link>
         <div>
           <h2 className="font-display text-3xl md:text-4xl">{PRODUCT.name}</h2>
-          <p className="font-tamil mt-1 text-lg text-warm">{PRODUCT.tamilName}</p>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
             {PRODUCT.longDescription}
           </p>

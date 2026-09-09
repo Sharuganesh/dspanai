@@ -213,7 +213,6 @@ function OrderPage() {
                     />
                     <div className="text-sm">
                       <p className="font-semibold text-forest">{PRODUCT.name}</p>
-                      <p className="font-tamil text-xs text-warm">{PRODUCT.tamilName}</p>
                       <p className="mt-1 text-muted-foreground">
                         {formatWeight(l.weightGrams)} · Qty {l.quantity}
                       </p>
