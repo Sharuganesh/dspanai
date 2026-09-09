@@ -79,6 +79,91 @@ function OrderPage() {
   const update = (key: keyof CustomerDetails, value: string) =>
     setDetails({ ...(details ?? EMPTY_DETAILS), [key]: value });
 
+  const handlePlaceOrder = async () => {
+    setPlacing(true);
+    setOrderError(null);
+    try {
+      const res = await submitOrder({
+        data: {
+          fullName: details.fullName,
+          mobile: details.mobile,
+          whatsapp: details.whatsapp || details.mobile,
+          email: details.email,
+          address: details.address,
+          city: details.city,
+          state: details.state,
+          pincode: details.pincode,
+          landmark: details.landmark,
+          instructions: details.instructions,
+          items: lines.map((l) => ({
+            weightGrams: l.weightGrams,
+            quantity: l.quantity,
+            unitPrice: calculatePrice(l.weightGrams),
+            lineTotal: calculatePrice(l.weightGrams) * l.quantity,
+          })),
+          productTotal: subtotal,
+          shipping: BRAND.shippingIndia,
+          total: subtotal + BRAND.shippingIndia,
+        },
+      });
+      setPlaced({ orderId: res.orderId, emailed: res.emailedCustomer });
+      clearCart();
+    } catch (err) {
+      setOrderError(
+        err instanceof Error ? err.message : "We could not place the order. Please try again.",
+      );
+    } finally {
+      setPlacing(false);
+    }
+  };
+
+  if (placed) {
+    return (
+      <div className="mx-auto max-w-[760px] px-6 py-20 md:px-8 md:py-28">
+        <div className="surface-card p-8 text-center md:p-12">
+          <span className="mx-auto grid size-14 place-items-center rounded-full bg-forest text-primary-foreground">
+            <Check className="size-7" />
+          </span>
+          <h1 className="mt-6 font-display text-[clamp(1.9rem,4.5vw,2.75rem)]">
+            Order placed. Thank you!
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            We have your order and will contact you shortly to confirm availability, the final
+            amount and dispatch.
+          </p>
+          <div className="mt-8 rounded-2xl border border-border bg-ivory p-6">
+            <p className="eyebrow">Your order ID</p>
+            <p className="mt-2 font-display text-3xl text-forest">{placed.orderId}</p>
+          </div>
+          <p className="mt-5 text-xs text-muted-foreground">
+            {placed.emailed
+              ? "Your invoice PDF and a thank-you note have been emailed to you."
+              : "Add an email next time and we will send your invoice PDF automatically."}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href={whatsappUrl(
+                `Hello ${BRAND.name}, I just placed order ${placed.orderId} on your website.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase"
+            >
+              <WhatsAppIcon className="size-5" />
+              Message us on WhatsApp
+            </a>
+            <Link
+              to="/shop"
+              className="rounded-full border border-forest/25 px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase hover:bg-cream"
+            >
+              Continue shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (lines.length === 0) {
     return (
       <div className="mx-auto max-w-[720px] px-6 py-24 text-center md:px-8">
