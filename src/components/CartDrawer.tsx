@@ -72,7 +72,6 @@ export function CartDrawer() {
                   />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold text-forest">{PRODUCT.shortName}</p>
-                    <p className="font-tamil text-xs text-warm">{PRODUCT.tamilName}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {formatWeight(line.weightGrams)} pouch
                     </p>

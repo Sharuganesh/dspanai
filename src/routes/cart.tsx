@@ -54,7 +54,6 @@ function CartPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h2 className="text-lg">{PRODUCT.name}</h2>
-                      <p className="font-tamil text-sm text-warm">{PRODUCT.tamilName}</p>
                     </div>
                     <button
                       type="button"
