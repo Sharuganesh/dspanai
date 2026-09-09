@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as OrderRouteImport } from './routes/order'
+import { Route as OrderDivya2004RouteImport } from './routes/order-divya2004'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PurityRouteImport } from './routes/purity'
@@ -40,6 +41,11 @@ const ContactRoute = ContactRouteImport.update({
 const OrderRoute = OrderRouteImport.update({
   id: '/order',
   path: '/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderDivya2004Route = OrderDivya2004RouteImport.update({
+  id: '/order-divya2004',
+  path: '/order-divya2004',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OurStoryRoute = OurStoryRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/order': typeof OrderRoute
+  '/order-divya2004': typeof OrderDivya2004Route
   '/our-story': typeof OurStoryRoute
   '/privacy': typeof PrivacyRoute
   '/purity': typeof PurityRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/order': typeof OrderRoute
+  '/order-divya2004': typeof OrderDivya2004Route
   '/our-story': typeof OurStoryRoute
   '/privacy': typeof PrivacyRoute
   '/purity': typeof PurityRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/order': typeof OrderRoute
+  '/order-divya2004': typeof OrderDivya2004Route
   '/our-story': typeof OurStoryRoute
   '/privacy': typeof PrivacyRoute
   '/purity': typeof PurityRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/contact'
     | '/order'
+    | '/order-divya2004'
     | '/our-story'
     | '/privacy'
     | '/purity'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/contact'
     | '/order'
+    | '/order-divya2004'
     | '/our-story'
     | '/privacy'
     | '/purity'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/contact'
     | '/order'
+    | '/order-divya2004'
     | '/our-story'
     | '/privacy'
     | '/purity'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
   OrderRoute: typeof OrderRoute
+  OrderDivya2004Route: typeof OrderDivya2004Route
   OurStoryRoute: typeof OurStoryRoute
   PrivacyRoute: typeof PrivacyRoute
   PurityRoute: typeof PurityRoute
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/order'
       fullPath: '/order'
       preLoaderRoute: typeof OrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-divya2004': {
+      id: '/order-divya2004'
+      path: '/order-divya2004'
+      fullPath: '/order-divya2004'
+      preLoaderRoute: typeof OrderDivya2004RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/our-story': {
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
   OrderRoute: OrderRoute,
+  OrderDivya2004Route: OrderDivya2004Route,
   OurStoryRoute: OurStoryRoute,
   PrivacyRoute: PrivacyRoute,
   PurityRoute: PurityRoute,
