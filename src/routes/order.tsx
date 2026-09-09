@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Copy, Loader2 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/Brand";
 import { EMPTY_DETAILS, useCart, type CustomerDetails } from "@/lib/cart";
-import { IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
+import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
 import { buildOrderMessage, whatsappUrl } from "@/lib/whatsapp";
+import { placeOrder } from "@/lib/orders.functions";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/order")({
