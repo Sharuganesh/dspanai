@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 type Tag = "h1" | "h2" | "h3" | "h4" | "p" | "div" | "span";
 
 /**
- * The site is English-only. This helper keeps a single text block API:
- * the English line is rendered, secondary-language props are ignored.
+ * The site is English-only. This helper keeps a single text-block API:
+ * only the English line is rendered.
  */
 export function Bi({
   en,
@@ -21,8 +21,7 @@ export function Bi({
   return <El className={className}>{en}</El>;
 }
 
-/** Tamil product name, used sparingly (once, beside the product name). */
+/** Small accent label. */
 export function Ta({ children, className }: { children: ReactNode; className?: string }) {
-  return (
-  );
+  return <span className={className}>{children}</span>;
 }
