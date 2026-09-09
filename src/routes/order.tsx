@@ -370,14 +370,24 @@ function OrderPage() {
 
           <aside className="surface-card p-6 lg:sticky lg:top-28">
             <OrderSummary />
+            <button
+              type="button"
+              disabled={placing}
+              onClick={handlePlaceOrder}
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-[1.02] disabled:opacity-60"
+            >
+              {placing && <Loader2 className="size-4 animate-spin" />}
+              {placing ? "Placing order" : "Place order"}
+            </button>
+            {orderError && <p className="mt-3 text-xs text-destructive">{orderError}</p>}
             <a
               href={whatsappUrl(message)}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-[1.02]"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-forest/25 px-6 py-3.5 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream"
             >
-              <WhatsAppIcon className="size-5" />
-              Order on WhatsApp
+              <WhatsAppIcon className="size-4" />
+              Or order on WhatsApp
             </a>
             <button
               type="button"
