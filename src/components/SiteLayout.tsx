@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
+  { to: "/track-order", label: "Track order" },
   { to: "/our-story", label: "Our Story" },
   { to: "/purity", label: "Purity" },
   { to: "/contact", label: "Contact" },
@@ -200,6 +201,7 @@ function Footer() {
           title="Explore"
           links={[
             { to: "/shop", label: "Shop" },
+            { to: "/track-order", label: "Track order" },
             { to: "/our-story", label: "Our Story" },
             { to: "/purity", label: "Purity" },
             { to: "/contact", label: "Contact" },

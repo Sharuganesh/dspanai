@@ -136,6 +136,7 @@ function doPost(e) {
     if (body.token !== SHARED_TOKEN) return json_({ ok: false, error: 'Unauthorized' });
 
     if (body.action === 'create') return json_(createOrder_(body.order));
+    if (body.action === 'track') return json_(trackOrder_(body.orderId, body.mobile));
     if (body.action === 'list') return json_({ ok: true, orders: listOrders_() });
     if (body.action === 'updateStatus') return json_(updateStatus_(body.orderId, body.status));
     if (body.action === 'ping') return json_({ ok: true, pong: true });
@@ -267,6 +268,36 @@ function listOrders_() {
   return out;
 }
 
+/* Public lookup: return only tracking-safe fields after matching the order ID and mobile. */
+function trackOrder_(orderId, mobile) {
+  var requestedId = String(orderId || '').trim().toUpperCase();
+  var requestedMobile = String(mobile || '').replace(/\D/g, '');
+  if (!requestedId || requestedMobile.length < 6) {
+    return { ok: false, error: 'Enter your order ID and mobile number.' };
+  }
+  var sheet = getSheet_();
+  if (sheet.getLastRow() < 2) return { ok: false, error: 'Order not found.' };
+  var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, HEADERS.length).getValues();
+  for (var i = 0; i < values.length; i++) {
+    var row = values[i];
+    var savedMobile = String(row[4] || '').replace(/\D/g, '');
+    if (String(row[0]).trim().toUpperCase() === requestedId && savedMobile === requestedMobile) {
+      return {
+        ok: true,
+        order: {
+          orderId: String(row[0]),
+          createdAt: String(row[1]),
+          status: String(row[2] || 'Pending'),
+          firstName: String(row[3]).trim().split(/\s+/)[0],
+          total: Number(row[17]) || 0,
+          invoiceUrl: String(row[18] || '')
+        }
+      };
+    }
+  }
+  return { ok: false, error: 'We could not find an order with those details.' };
+}
+
 function updateStatus_(orderId, status) {
   if (STATUSES.indexOf(status) === -1) return { ok: false, error: 'Invalid status' };
   var sheet = getSheet_();
@@ -327,7 +358,8 @@ function buildInvoicePdf_(orderId, date, order, items) {
   }
 
   var html =
-  '<html><body style="margin:0;padding:34px;font-family:Georgia,serif;background:' + PAPER + ';color:' + INK + ';">' +
+  '<html><body style="margin:0;padding:28px;font-family:Georgia,serif;background:#EFE7D9;color:' + INK + ';">' +
+    '<div style="max-width:760px;margin:0 auto;padding:34px;background:' + PAPER + ';border:1px solid #D8C8B0;box-shadow:0 8px 28px rgba(26,23,20,.12);">' +
     '<table width="100%" style="border-collapse:collapse;"><tr>' +
       '<td style="vertical-align:middle;">' +
         '<img src="' + LOGO_URL + '" width="64" height="64" style="vertical-align:middle;border:0;">' +
@@ -389,7 +421,7 @@ function buildInvoicePdf_(orderId, date, order, items) {
     '<div style="margin-top:34px;padding:14px 16px;background:' + CREAM + ';border-left:4px solid ' + CARAMEL + ';font-family:Helvetica,Arial,sans-serif;font-size:11.5px;color:#4A423A;">' +
       'Order status updates (Confirmed, Shipped, In Transit, Delivered) are emailed to you automatically. Quote <b>' + orderId + '</b> in any message.' +
     '</div>' +
-  '</body></html>';
+    '</div></body></html>';
 
   return Utilities.newBlob(html, 'text/html', 'invoice.html')
     .getAs('application/pdf')
@@ -434,11 +466,12 @@ function detailTable_(orderId, order, items) {
     '<div style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:' + CARAMEL + ';">Order ID</div>' +
     '<div style="font-family:Georgia,serif;font-size:20px;margin-top:4px;">' + orderId + '</div>' +
   '</div>' +
-  '<table width="100%" style="border-collapse:collapse;margin-top:16px;font-size:13.5px;">' + rows +
+  '<div style="margin-top:16px;padding:16px 18px;border:1px solid #E8DFCF;border-radius:12px;background:#FFFDF8;">' +
+  '<table width="100%" style="border-collapse:collapse;font-size:13.5px;">' + rows +
     '<tr><td style="padding:9px 0;color:#6F6459;">Shipping</td><td style="padding:9px 0;text-align:right;">' + money_(order.shipping) + '</td></tr>' +
     '<tr><td style="padding:11px 0;border-top:2px solid ' + INK + ';font-weight:bold;">Grand total</td>' +
     '<td style="padding:11px 0;border-top:2px solid ' + INK + ';text-align:right;font-weight:bold;color:' + CARAMEL + ';font-size:17px;">' + money_(order.total) + '</td></tr>' +
-  '</table>' +
+  '</table></div>' +
   '<div style="margin-top:18px;font-size:13px;line-height:1.7;color:#4A423A;">' +
     '<b>Delivering to</b><br>' + esc_(order.fullName) + '<br>' + esc_(order.address) + '<br>' +
     esc_(order.city) + ', ' + esc_(order.state) + ' - ' + esc_(order.pincode) + '<br>Phone: ' + esc_(order.mobile) +

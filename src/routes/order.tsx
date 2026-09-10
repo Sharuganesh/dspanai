@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Copy, Loader2 } from "lucide-react";
-import { WhatsAppIcon } from "@/components/Brand";
+import { Check, Loader2 } from "lucide-react";
+import { OrderLoading } from "@/components/OrderLoading";
 import {
   EMPTY_DETAILS,
   useCart,
@@ -10,7 +10,6 @@ import {
   type ShippingDestination,
 } from "@/lib/cart";
 import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
-import { buildOrderMessage, whatsappUrl } from "@/lib/whatsapp";
 import { placeOrder } from "@/lib/orders.functions";
 import { cn } from "@/lib/utils";
 
@@ -58,8 +57,7 @@ type FieldDef = {
 const FIELDS: FieldDef[] = [
   { key: "fullName", label: "Full name" },
   { key: "mobile", label: "Mobile number", type: "tel" },
-  { key: "whatsapp", label: "WhatsApp number (if different)", type: "tel", optional: true },
-  { key: "email", label: "Email", type: "email", optional: true },
+  { key: "email", label: "Email", type: "email" },
   { key: "address", label: "Address", span: true, textarea: true },
   { key: "city", label: "City" },
   { key: "state", label: "State" },
@@ -83,7 +81,6 @@ function OrderPage() {
   const [step, setStep] = useState<"details" | "review">("details");
   const [confirmed, setConfirmed] = useState(false);
   const [touched, setTouched] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [placing, setPlacing] = useState(false);
   const [placed, setPlaced] = useState<{ orderId: string; emailed: boolean } | null>(null);
   const [orderError, setOrderError] = useState<string | null>(null);
@@ -93,7 +90,6 @@ function OrderPage() {
     details.country === "International" ? BRAND.shippingInternational : BRAND.shippingIndia;
   const total = subtotal + shipping;
 
-  const message = useMemo(() => buildOrderMessage(lines, details, shipping), [lines, details, shipping]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
   const canContinue = missing.length === 0 && confirmed;
 
@@ -108,7 +104,7 @@ function OrderPage() {
         data: {
           fullName: details.fullName,
           mobile: details.mobile,
-          whatsapp: details.whatsapp || details.mobile,
+          whatsapp: details.mobile,
           email: details.email,
           address: details.address,
           city: details.city,
@@ -162,17 +158,6 @@ function OrderPage() {
               : "Add an email next time and we will send your invoice PDF automatically."}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href={whatsappUrl(
-                `Hello ${BRAND.name}, I just placed order ${placed.orderId} on your website.`,
-              )}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase"
-            >
-              <WhatsAppIcon className="size-5" />
-              Message us on WhatsApp
-            </a>
             <Link
               to="/shop"
               className="rounded-full border border-forest/25 px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase hover:bg-cream"
@@ -219,7 +204,7 @@ function OrderPage() {
               {i + 1}
             </span>
             <span className={step === s ? "text-forest" : "text-warm"}>
-              {s === "details" ? "Customer details" : "Review & WhatsApp"}
+              {s === "details" ? "Customer details" : "Review order"}
             </span>
             {i === 0 && <span className="text-border">———</span>}
           </li>
@@ -369,7 +354,6 @@ function OrderPage() {
                   [
                     ["Name", details.fullName],
                     ["Phone", details.mobile],
-                    ["WhatsApp", details.whatsapp || details.mobile],
                     ["Email", details.email],
                     ["Address", details.address],
                     ["City", details.city],
@@ -389,20 +373,6 @@ function OrderPage() {
               </dl>
             </div>
 
-            <div className="surface-card p-6">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-xl">WhatsApp message preview</h2>
-                <span className="text-[10px] font-semibold tracking-wide text-warm uppercase">
-                  One-tap send
-                </span>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                This is the exact English message that will open in WhatsApp when you tap the button.
-              </p>
-              <pre className="mt-4 max-h-64 overflow-auto rounded-lg border border-border bg-ivory p-4 text-xs whitespace-pre-wrap text-forest">
-                {message}
-              </pre>
-            </div>
           </div>
 
           <aside className="surface-card p-6 lg:sticky lg:top-28">
@@ -416,31 +386,10 @@ function OrderPage() {
               {placing && <Loader2 className="size-4 animate-spin" />}
               {placing ? "Placing order" : "Place order"}
             </button>
+            {placing && <OrderLoading label="Creating your order" />}
             {orderError && <p className="mt-3 text-xs text-destructive">{orderError}</p>}
-            <a
-              href={whatsappUrl(message)}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-forest/25 px-6 py-3.5 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream"
-            >
-              <WhatsAppIcon className="size-4" />
-              Or order on WhatsApp
-            </a>
-            <button
-              type="button"
-              onClick={async () => {
-                await navigator.clipboard.writeText(message);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2500);
-              }}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-forest/25 px-6 py-3.5 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream"
-            >
-              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-              {copied ? "Copied" : "Copy order details"}
-            </button>
             <p className="mt-4 text-xs text-muted-foreground">
-              Your details stay in your browser until you send them yourself on WhatsApp.
-
+              Your invoice PDF will be emailed as soon as this order is created.
             </p>
           </aside>
         </div>

@@ -10,13 +10,10 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noreferrer"
       aria-label={`Chat with ${BRAND.name} on WhatsApp`}
-      className="wa-float group fixed right-4 bottom-4 z-40 flex items-center gap-2 rounded-full bg-forest py-3 pr-4 pl-3 text-primary-foreground shadow-lift transition-transform duration-300 hover:scale-105 md:right-6 md:bottom-6"
+      className="wa-float group fixed right-4 bottom-4 z-40 grid size-14 place-items-center rounded-full border-2 border-gold/70 bg-forest text-primary-foreground shadow-lift transition-transform duration-300 hover:scale-110 md:right-6 md:bottom-6 md:size-16"
     >
-      <span className="grid size-8 place-items-center rounded-full bg-gold/90 text-forest">
-        <WhatsAppIcon className="size-5" />
-      </span>
-      <span className="hidden text-left text-xs leading-tight font-bold sm:block">
-        Order on WhatsApp
+      <span className="grid size-10 place-items-center rounded-full bg-gold text-forest transition-transform duration-300 group-hover:rotate-6 md:size-11">
+        <WhatsAppIcon className="size-6 md:size-7" />
       </span>
     </a>
   );

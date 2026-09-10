@@ -59,6 +59,15 @@ export type OrderRecord = {
   emailedCustomer: string;
 };
 
+export type TrackedOrder = {
+  orderId: string;
+  createdAt: string;
+  status: OrderStatus;
+  firstName: string;
+  total: number;
+  invoiceUrl: string;
+};
+
 /* ------------------------------------------------------------------ */
 /* Apps Script bridge                                                  */
 /* ------------------------------------------------------------------ */
@@ -103,6 +112,7 @@ function validateOrder(input: OrderInput): OrderInput {
   const required: (keyof OrderInput)[] = [
     "fullName",
     "mobile",
+    "email",
     "address",
     "city",
     "state",
@@ -143,6 +153,16 @@ export const placeOrder = createServerFn({ method: "POST" })
       { order },
     );
     return { orderId: result.orderId, emailedCustomer: result.emailedCustomer };
+  });
+
+export const trackOrder = createServerFn({ method: "POST" })
+  .inputValidator((data: { orderId: string; mobile: string }) => data)
+  .handler(async ({ data }) => {
+    const orderId = clean(data.orderId).toUpperCase();
+    const mobile = clean(data.mobile);
+    if (!orderId || !mobile) throw new Error("Enter your order ID and mobile number.");
+    const result = await callScript<{ order: TrackedOrder }>("track", { orderId, mobile });
+    return result.order;
   });
 
 /* ------------------------------------------------------------------ */
