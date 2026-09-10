@@ -26,7 +26,11 @@ function optionalCustomerFields(details: CustomerDetails): string[] {
   return out;
 }
 
-export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): string {
+export function buildOrderMessage(
+  lines: CartLine[],
+  details: CustomerDetails,
+  shipping = BRAND.shippingIndia,
+): string {
   const productTotal = lines.reduce(
     (sum, l) => sum + calculatePrice(l.weightGrams) * l.quantity,
     0,
@@ -50,11 +54,12 @@ export function buildOrderMessage(lines: CartLine[], details: CustomerDetails): 
     "DELIVERY ADDRESS",
     details.address,
     `${details.city}, ${details.state} - ${details.pincode}`,
+    `${details.country === "International" ? "International" : "India"} shipping`,
     "",
     "ORDER TOTAL",
     `Product Total: ${formatINR(productTotal)}`,
-    `Shipping (India): ${formatINR(BRAND.shippingIndia)}`,
-    `Shipping (International): ${formatINR(BRAND.shippingInternational)}`,
+    `Shipping: ${formatINR(shipping)}`,
+    `Estimated Total: ${formatINR(productTotal + shipping)}`,
     "",
     "Please confirm availability and the final payable amount.",
     "",
