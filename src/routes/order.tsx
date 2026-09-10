@@ -17,16 +17,17 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/order")({
   head: () => ({
     meta: [
-      { title: "Review & Order on WhatsApp | D's PANAI" },
+      { title: "Review & Place Order | D's PANAI" },
       {
         name: "description",
         content:
-          "Enter your delivery details, review your Panangarkandu order and send it to D's PANAI on WhatsApp for confirmation.",
+          "Enter your delivery details, review your Panangarkandu order and place it. We email your invoice and contact you to confirm dispatch.",
       },
-      { property: "og:title", content: "Order Panangarkandu on WhatsApp — D's PANAI" },
+      { property: "og:title", content: "Place your Panangarkandu order — D's PANAI" },
       {
         property: "og:description",
-        content: "Review your order and send it to us on WhatsApp. No online payment required.",
+        content:
+          "Review your order, get a unique order ID, and receive your invoice by email. No online payment required.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
