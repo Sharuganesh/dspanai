@@ -51,6 +51,7 @@ type FieldDef = {
   type?: string;
   span?: boolean;
   textarea?: boolean;
+  select?: { options: { value: string; label: string }[] };
   optional?: boolean;
 };
 
@@ -64,6 +65,16 @@ const FIELDS: FieldDef[] = [
   { key: "state", label: "State" },
   { key: "pincode", label: "Pincode", type: "text" },
   { key: "landmark", label: "Landmark", optional: true },
+  {
+    key: "country",
+    label: "Shipping destination",
+    select: {
+      options: [
+        { value: "India", label: "India (₹50 shipping)" },
+        { value: "International", label: "International (₹500 shipping)" },
+      ],
+    },
+  },
   { key: "instructions", label: "Delivery instructions", span: true, textarea: true, optional: true },
 ];
 
