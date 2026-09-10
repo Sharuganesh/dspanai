@@ -22,7 +22,6 @@ const STATUS_STEPS = ["Pending", "Confirmed", "Shipped", "In Transit", "Delivere
 function TrackOrderPage() {
   const lookup = useServerFn(trackOrder);
   const [orderId, setOrderId] = useState("");
-  const [mobile, setMobile] = useState("");
   const [tracked, setTracked] = useState<TrackedOrder | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +32,7 @@ function TrackOrderPage() {
     setError(null);
     setTracked(null);
     try {
-      setTracked(await lookup({ data: { orderId, mobile } }));
+      setTracked(await lookup({ data: { orderId } }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "We could not find that order.");
     } finally {
@@ -47,7 +46,7 @@ function TrackOrderPage() {
         <p className="eyebrow">A sweet little update</p>
         <h1 className="mt-4 font-display text-[clamp(2.3rem,6vw,4.5rem)]">Track your order</h1>
         <p className="mt-4 text-muted-foreground">
-          Enter the order ID from your email and the mobile number used at checkout.
+          Enter the order ID from your order confirmation email.
         </p>
       </div>
 
@@ -64,20 +63,6 @@ function TrackOrderPage() {
               onChange={(event) => setOrderId(event.target.value.toUpperCase())}
               placeholder="DSP-260910-0001"
               className="mt-2 w-full rounded-lg border border-input bg-card px-3 py-3 text-sm uppercase"
-            />
-          </div>
-          <div>
-            <label htmlFor="track-mobile" className="block text-xs font-semibold tracking-wide text-forest">
-              Mobile number
-            </label>
-            <input
-              id="track-mobile"
-              required
-              type="tel"
-              value={mobile}
-              onChange={(event) => setMobile(event.target.value)}
-              placeholder="The number used for delivery"
-              className="mt-2 w-full rounded-lg border border-input bg-card px-3 py-3 text-sm"
             />
           </div>
           <button

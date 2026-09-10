@@ -136,7 +136,7 @@ function doPost(e) {
     if (body.token !== SHARED_TOKEN) return json_({ ok: false, error: 'Unauthorized' });
 
     if (body.action === 'create') return json_(createOrder_(body.order));
-    if (body.action === 'track') return json_(trackOrder_(body.orderId, body.mobile));
+    if (body.action === 'track') return json_(trackOrder_(body.orderId));
     if (body.action === 'list') return json_({ ok: true, orders: listOrders_() });
     if (body.action === 'updateStatus') return json_(updateStatus_(body.orderId, body.status));
     if (body.action === 'ping') return json_({ ok: true, pong: true });
@@ -268,20 +268,18 @@ function listOrders_() {
   return out;
 }
 
-/* Public lookup: return only tracking-safe fields after matching the order ID and mobile. */
-function trackOrder_(orderId, mobile) {
+/* Public lookup: return only tracking-safe fields for a known order ID. */
+function trackOrder_(orderId) {
   var requestedId = String(orderId || '').trim().toUpperCase();
-  var requestedMobile = String(mobile || '').replace(/\D/g, '');
-  if (!requestedId || requestedMobile.length < 6) {
-    return { ok: false, error: 'Enter your order ID and mobile number.' };
+  if (!requestedId) {
+    return { ok: false, error: 'Enter your order ID.' };
   }
   var sheet = getSheet_();
   if (sheet.getLastRow() < 2) return { ok: false, error: 'Order not found.' };
   var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, HEADERS.length).getValues();
   for (var i = 0; i < values.length; i++) {
     var row = values[i];
-    var savedMobile = String(row[4] || '').replace(/\D/g, '');
-    if (String(row[0]).trim().toUpperCase() === requestedId && savedMobile === requestedMobile) {
+    if (String(row[0]).trim().toUpperCase() === requestedId) {
       return {
         ok: true,
         order: {

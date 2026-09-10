@@ -156,12 +156,11 @@ export const placeOrder = createServerFn({ method: "POST" })
   });
 
 export const trackOrder = createServerFn({ method: "POST" })
-  .inputValidator((data: { orderId: string; mobile: string }) => data)
+  .inputValidator((data: { orderId: string }) => data)
   .handler(async ({ data }) => {
     const orderId = clean(data.orderId).toUpperCase();
-    const mobile = clean(data.mobile);
-    if (!orderId || !mobile) throw new Error("Enter your order ID and mobile number.");
-    const result = await callScript<{ order: TrackedOrder }>("track", { orderId, mobile });
+    if (!orderId) throw new Error("Enter your order ID.");
+    const result = await callScript<{ order: TrackedOrder }>("track", { orderId });
     return result.order;
   });
 
