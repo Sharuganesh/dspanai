@@ -3,7 +3,12 @@ import { useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Check, Copy, Loader2 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/Brand";
-import { EMPTY_DETAILS, useCart, type CustomerDetails } from "@/lib/cart";
+import {
+  EMPTY_DETAILS,
+  useCart,
+  type CustomerDetails,
+  type ShippingDestination,
+} from "@/lib/cart";
 import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
 import { buildOrderMessage, whatsappUrl } from "@/lib/whatsapp";
 import { placeOrder } from "@/lib/orders.functions";
@@ -12,16 +17,17 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/order")({
   head: () => ({
     meta: [
-      { title: "Review & Order on WhatsApp | D's PANAI" },
+      { title: "Review & Place Order | D's PANAI" },
       {
         name: "description",
         content:
-          "Enter your delivery details, review your Panangarkandu order and send it to D's PANAI on WhatsApp for confirmation.",
+          "Enter your delivery details, review your Panangarkandu order and place it. We email your invoice and contact you to confirm dispatch.",
       },
-      { property: "og:title", content: "Order Panangarkandu on WhatsApp — D's PANAI" },
+      { property: "og:title", content: "Place your Panangarkandu order — D's PANAI" },
       {
         property: "og:description",
-        content: "Review your order and send it to us on WhatsApp. No online payment required.",
+        content:
+          "Review your order, get a unique order ID, and receive your invoice by email. No online payment required.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -45,6 +51,7 @@ type FieldDef = {
   type?: string;
   span?: boolean;
   textarea?: boolean;
+  select?: { options: { value: string; label: string }[] };
   optional?: boolean;
 };
 
@@ -58,6 +65,16 @@ const FIELDS: FieldDef[] = [
   { key: "state", label: "State" },
   { key: "pincode", label: "Pincode", type: "text" },
   { key: "landmark", label: "Landmark", optional: true },
+  {
+    key: "country",
+    label: "Shipping destination",
+    select: {
+      options: [
+        { value: "India", label: "India (₹50 shipping)" },
+        { value: "International", label: "International (₹500 shipping)" },
+      ],
+    },
+  },
   { key: "instructions", label: "Delivery instructions", span: true, textarea: true, optional: true },
 ];
 
@@ -72,7 +89,11 @@ function OrderPage() {
   const [orderError, setOrderError] = useState<string | null>(null);
   const submitOrder = useServerFn(placeOrder);
 
-  const message = useMemo(() => buildOrderMessage(lines, details), [lines, details]);
+  const shipping =
+    details.country === "International" ? BRAND.shippingInternational : BRAND.shippingIndia;
+  const total = subtotal + shipping;
+
+  const message = useMemo(() => buildOrderMessage(lines, details, shipping), [lines, details, shipping]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
   const canContinue = missing.length === 0 && confirmed;
 
@@ -102,8 +123,8 @@ function OrderPage() {
             lineTotal: calculatePrice(l.weightGrams) * l.quantity,
           })),
           productTotal: subtotal,
-          shipping: BRAND.shippingIndia,
-          total: subtotal + BRAND.shippingIndia,
+          shipping,
+          total,
         },
       });
       setPlaced({ orderId: res.orderId, emailed: res.emailedCustomer });
@@ -230,7 +251,23 @@ function OrderPage() {
                     {f.label}
                     {!f.optional && <span className="text-destructive"> *</span>}
                   </label>
-                  {f.textarea ? (
+                  {f.select ? (
+                    <select
+                      id={f.key}
+                      value={details[f.key]}
+                      onChange={(e) => update(f.key, e.target.value)}
+                      className={cn(
+                        "mt-2 w-full rounded-lg border bg-card px-3 py-2.5 text-sm",
+                        invalid ? "border-destructive" : "border-input",
+                      )}
+                    >
+                      {f.select.options.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : f.textarea ? (
                     <textarea
                       id={f.key}
                       rows={3}
