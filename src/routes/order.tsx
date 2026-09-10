@@ -251,7 +251,23 @@ function OrderPage() {
                     {f.label}
                     {!f.optional && <span className="text-destructive"> *</span>}
                   </label>
-                  {f.textarea ? (
+                  {f.select ? (
+                    <select
+                      id={f.key}
+                      value={details[f.key]}
+                      onChange={(e) => update(f.key, e.target.value)}
+                      className={cn(
+                        "mt-2 w-full rounded-lg border bg-card px-3 py-2.5 text-sm",
+                        invalid ? "border-destructive" : "border-input",
+                      )}
+                    >
+                      {f.select.options.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : f.textarea ? (
                     <textarea
                       id={f.key}
                       rows={3}
