@@ -19,6 +19,8 @@ export type CartLine = {
 const STORAGE_KEY = "ds-panai-cart-v1";
 const DETAILS_KEY = "ds-panai-details-v1";
 
+export type ShippingDestination = "India" | "International";
+
 export type CustomerDetails = {
   fullName: string;
   mobile: string;
@@ -30,6 +32,7 @@ export type CustomerDetails = {
   email: string;
   landmark: string;
   instructions: string;
+  country: ShippingDestination;
 };
 
 export const EMPTY_DETAILS: CustomerDetails = {
@@ -43,6 +46,7 @@ export const EMPTY_DETAILS: CustomerDetails = {
   email: "",
   landmark: "",
   instructions: "",
+  country: "India",
 };
 
 type CartContextValue = {
