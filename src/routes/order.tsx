@@ -123,8 +123,8 @@ function OrderPage() {
             lineTotal: calculatePrice(l.weightGrams) * l.quantity,
           })),
           productTotal: subtotal,
-          shipping: BRAND.shippingIndia,
-          total: subtotal + BRAND.shippingIndia,
+          shipping,
+          total,
         },
       });
       setPlaced({ orderId: res.orderId, emailed: res.emailedCustomer });
