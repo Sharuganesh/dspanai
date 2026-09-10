@@ -89,7 +89,11 @@ function OrderPage() {
   const [orderError, setOrderError] = useState<string | null>(null);
   const submitOrder = useServerFn(placeOrder);
 
-  const message = useMemo(() => buildOrderMessage(lines, details), [lines, details]);
+  const shipping =
+    details.country === "International" ? BRAND.shippingInternational : BRAND.shippingIndia;
+  const total = subtotal + shipping;
+
+  const message = useMemo(() => buildOrderMessage(lines, details, shipping), [lines, details, shipping]);
   const missing = REQUIRED.filter((k) => !details[k].trim());
   const canContinue = missing.length === 0 && confirmed;
 
