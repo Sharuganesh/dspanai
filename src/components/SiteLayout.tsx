@@ -58,8 +58,8 @@ function Header() {
           : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-4 py-2 md:px-8">
-        <Logo className={cn("transition-all duration-500", scrolled && "h-12 md:h-14")} />
+      <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-3 px-4 py-2 md:px-8">
+        <Logo className={cn("transition-all duration-500", scrolled && "h-10 md:h-12")} />
 
         <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
@@ -120,7 +120,7 @@ function Header() {
         )}
       >
         <div className="flex shrink-0 items-center justify-between border-b border-border/60 px-4 py-3">
-          <Logo className="h-11" />
+          <Logo className="h-10" />
           <button
             type="button"
             onClick={() => setMenuOpen(false)}

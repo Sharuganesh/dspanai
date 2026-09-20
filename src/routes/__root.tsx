@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "../lib/cart";
 import { SiteLayout } from "../components/SiteLayout";
+import { BrandedLoader } from "../components/BrandedLoader";
 
 
 function NotFoundComponent() {
@@ -133,6 +134,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
+        <BrandedLoader />
         <SiteLayout>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
