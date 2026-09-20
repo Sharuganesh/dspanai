@@ -293,21 +293,20 @@ body[data-menu-open] .wa-float {
   100% { opacity: 0; visibility: hidden; }
 }
 @keyframes loaderLogoRise {
-  from { opacity: 0; transform: translateY(18px) scale(0.86); }
-  to { opacity: 1; transform: none; }
+  0% { opacity: 0; transform: translateY(42px) scale(0.18); filter: blur(5px); }
+  48% { opacity: 1; transform: translateY(0) scale(1.06); filter: blur(0); }
+  72% { transform: rotate(-2deg) scale(1); }
+  86% { transform: rotate(1.5deg) scale(1); }
+  100% { opacity: 1; transform: none; filter: blur(0); }
 }
-@keyframes frondOpen {
-  from { opacity: 0; transform: rotate(var(--frond-angle)) scaleY(0); }
-  to { opacity: 0.72; transform: rotate(var(--frond-angle)) scaleY(1); }
+@keyframes treeReveal {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 @keyframes crystalSettle {
-  0% { opacity: 0; transform: translateY(-34px) rotate(35deg) scale(0.5); }
-  70% { opacity: 1; transform: translateY(2px) rotate(3deg) scale(1.08); }
-  100% { opacity: 1; transform: none; }
-}
-@keyframes loaderLine {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  0% { opacity: 0; transform: translateY(-24px) rotate(45deg) scale(0.35); }
+  65% { opacity: 1; transform: translateY(3px) rotate(48deg) scale(1.1); }
+  100% { opacity: 0; transform: translateY(12px) rotate(45deg) scale(0.75); }
 }
 @utility animate-marquee { animation: marquee 26s linear infinite; }
 @utility animate-floaty { animation: floaty 6s ease-in-out infinite; }
@@ -423,68 +422,37 @@ body[data-menu-open] .wa-float {
   background: var(--color-ivory);
   animation: loaderLeave 1.9s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-.brand-loader__sun {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 17rem;
-  height: 17rem;
-  border: 1px solid color-mix(in oklab, var(--color-sand) 35%, transparent);
-  border-radius: 50%;
-  transform: translate(-50%, -58%);
-}
-.brand-loader__fronds {
-  position: absolute;
-  top: calc(50% - 8.6rem);
-  left: 50%;
-  width: 1px;
-  height: 7rem;
-}
-.brand-loader__fronds span {
-  --frond-angle: 0deg;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 1px;
-  height: 6.8rem;
-  border-radius: 999px;
-  background: var(--color-gold);
-  transform-origin: bottom;
-  animation: frondOpen 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-.brand-loader__fronds span:nth-child(1) { --frond-angle: -64deg; animation-delay: 0.1s; }
-.brand-loader__fronds span:nth-child(2) { --frond-angle: -32deg; animation-delay: 0.16s; }
-.brand-loader__fronds span:nth-child(3) { --frond-angle: 0deg; animation-delay: 0.22s; }
-.brand-loader__fronds span:nth-child(4) { --frond-angle: 32deg; animation-delay: 0.28s; }
-.brand-loader__fronds span:nth-child(5) { --frond-angle: 64deg; animation-delay: 0.34s; }
-.brand-loader__logo {
+.brand-loader__tree {
   z-index: 1;
+  animation: treeReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+.brand-loader__logo {
   width: auto;
-  height: 8.5rem;
+  height: 10rem;
   object-fit: contain;
-  animation: loaderLogoRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  animation: loaderLogoRise 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
   filter: drop-shadow(0 15px 17px rgb(140 90 40 / 0.16));
 }
-.brand-loader__crystals {
+.brand-loader__candy {
   position: absolute;
-  top: calc(50% - 1.1rem);
+  top: calc(50% - 5.2rem);
   left: 50%;
   z-index: 2;
-  width: 5rem;
+  width: 7rem;
   transform: translateX(-50%);
 }
-.brand-loader__crystals span {
+.brand-loader__candy span {
   position: absolute;
-  width: 0.68rem;
-  height: 0.68rem;
-  border: 1px solid color-mix(in oklab, var(--color-gold) 70%, var(--color-sand));
+  width: 0.56rem;
+  height: 0.56rem;
+  border-radius: 2px;
   background: color-mix(in oklab, var(--color-sand) 64%, transparent);
   transform: rotate(45deg);
-  animation: crystalSettle 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: crystalSettle 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
-.brand-loader__crystals span:nth-child(1) { left: 0.5rem; animation-delay: 0.45s; }
-.brand-loader__crystals span:nth-child(2) { left: 2.2rem; top: 0.5rem; animation-delay: 0.58s; }
-.brand-loader__crystals span:nth-child(3) { right: 0.35rem; top: -0.2rem; animation-delay: 0.69s; }
+.brand-loader__candy span:nth-child(1) { left: 0.2rem; animation-delay: 0.28s; }
+.brand-loader__candy span:nth-child(2) { left: 3.25rem; top: -0.7rem; animation-delay: 0.42s; }
+.brand-loader__candy span:nth-child(3) { right: 0.15rem; top: 0.2rem; animation-delay: 0.55s; }
 .brand-loader__copy {
   z-index: 1;
   margin-top: 0.8rem;
@@ -506,13 +474,4 @@ body[data-menu-open] .wa-float {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-}
-.brand-loader__line {
-  z-index: 1;
-  width: 8.5rem;
-  height: 1px;
-  margin-top: 1rem;
-  background: var(--gradient-gold);
-  transform-origin: center;
-  animation: loaderLine 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.78s both;
 }
