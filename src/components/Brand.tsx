@@ -5,14 +5,26 @@ import logoMark from "@/assets/logo-mark.png";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link to="/" aria-label={`${BRAND.name} home`} className="inline-flex items-center">
+    <Link
+      to="/"
+      aria-label={`${BRAND.name} home`}
+      className="brand-lockup group inline-flex min-w-0 items-center gap-2.5 md:gap-3"
+    >
       <img
         src={logoMark}
         alt={`${BRAND.name} — Pure Panangarkandu palm candy`}
         width={594}
         height={805}
-        className={cn("h-14 w-auto md:h-[74px]", className)}
+        className={cn("brand-lockup__mark h-12 w-auto shrink-0 md:h-16", className)}
       />
+      <span className="brand-lockup__copy flex min-w-0 flex-col leading-none">
+        <strong className="font-display text-[1.15rem] font-medium text-forest md:text-[1.45rem]">
+          D&apos;s Panai
+        </strong>
+        <span className="mt-1 text-[8px] font-bold tracking-[0.16em] text-gold uppercase md:text-[9px]">
+          Pure Palm Candy
+        </span>
+      </span>
     </Link>
   );
 }
