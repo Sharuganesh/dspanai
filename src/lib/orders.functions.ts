@@ -56,6 +56,8 @@ export type OrderRecord = {
   shipping: number;
   total: number;
   invoiceUrl: string;
+  paymentStatus: string;
+  paymentProofUrl: string;
   emailedCustomer: string;
 };
 
@@ -153,6 +155,24 @@ export const placeOrder = createServerFn({ method: "POST" })
       { order },
     );
     return { orderId: result.orderId, emailedCustomer: result.emailedCustomer };
+  });
+
+export const uploadPaymentProof = createServerFn({ method: "POST" })
+  .inputValidator((data: { orderId: string; fileName: string; mimeType: string; dataUrl: string }) => data)
+  .handler(async ({ data }) => {
+    const orderId = clean(data.orderId).toUpperCase();
+    const fileName = clean(data.fileName).slice(0, 120);
+    const mimeType = clean(data.mimeType).toLowerCase();
+    const dataUrl = typeof data.dataUrl === "string" ? data.dataUrl : "";
+    if (!orderId || !fileName || !dataUrl) throw new Error("Please choose a payment screenshot.");
+    if (!/^image\/(png|jpeg|webp)$/.test(mimeType)) {
+      throw new Error("Please upload a PNG, JPG or WebP screenshot.");
+    }
+    if (dataUrl.length > 7_000_000) throw new Error("The screenshot must be smaller than 5 MB.");
+    return callScript<{ paymentStatus: string; paymentProofUrl: string }>(
+      "uploadPaymentProof",
+      { orderId, fileName, mimeType, dataUrl },
+    );
   });
 
 export const trackOrder = createServerFn({ method: "POST" })

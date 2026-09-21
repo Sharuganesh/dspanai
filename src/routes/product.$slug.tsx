@@ -18,13 +18,13 @@ export const Route = createFileRoute("/product/$slug")({
       {
         name: "description",
         content:
-          "Shop D's PANAI Pure Panangarkandu (Palm Candy) in a traditional cloth pouch. Starting at 250g for ₹300.",
+          "Shop D's PANAI Pure Panangarkandu (Palm Candy) in our illustrated branded pack. Starting at 250g for ₹299.",
       },
       { property: "og:title", content: "Pure Panangarkandu — D's PANAI" },
       {
         property: "og:description",
         content:
-          "Traditional palm candy with naturally formed crystals, packed in our signature cloth pouch.",
+          "Traditional palm candy with naturally formed crystals, packed in our illustrated D's PANAI pack.",
       },
       { property: "og:type", content: "product" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -59,7 +59,7 @@ const DETAIL_SECTIONS = [
   },
   {
     title: "Our packaging",
-    body: "Each order is packed in a plastic-free primary cloth pouch with a drawstring, inspired by the way traditional goods were carried and stored. The pouch keeps the focus on the product rather than on the package.",
+    body: "Each order is packed in the illustrated D's PANAI pack shown across this site, with the product and its traditional story clearly presented.",
   },
   {
     title: "Our tradition",

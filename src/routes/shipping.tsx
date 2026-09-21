@@ -31,7 +31,7 @@ export const Route = createFileRoute("/shipping")({
         {
           heading: "Packing",
           body: [
-            "Your Panangarkandu is packed in a plastic-free primary cloth pouch and then placed in protective outer packaging for transit.",
+            "Your Panangarkandu is packed in the illustrated D's PANAI pack and then placed in protective outer packaging for transit.",
           ],
         },
         {

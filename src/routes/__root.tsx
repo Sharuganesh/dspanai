@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "D's PANAI brings traditional Pure Panangarkandu (Palm Candy) from a family tradition to your home, packed in a simple traditional cloth pouch.",
+          "D's PANAI brings traditional Pure Panangarkandu (Palm Candy) from a family tradition to your home in our illustrated branded pack.",
       },
       { name: "author", content: "D's PANAI" },
       { name: "theme-color", content: "#1A1714" },

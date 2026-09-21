@@ -47,7 +47,7 @@ var HEADERS = [
   'Order ID', 'Date', 'Status', 'Customer', 'Mobile', 'WhatsApp', 'Email',
   'Address', 'City', 'State', 'Pincode', 'Landmark', 'Instructions',
   'Items', 'Total Weight (g)', 'Product Total', 'Shipping', 'Grand Total',
-  'Invoice PDF', 'Customer Emailed', 'Last Status Update'
+  'Invoice PDF', 'Payment Status', 'Payment Proof', 'Customer Emailed', 'Last Status Update'
 ];
 
 /* ================================================================ */
@@ -65,6 +65,8 @@ function getSheet_() {
   var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sheet.getLastRow() === 0) {
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  } else if (sheet.getRange(1, 22).getValue() !== 'Payment Status') {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
   return sheet;
 }
@@ -81,7 +83,7 @@ function styleSheet_(sheet) {
   sheet.setFrozenRows(1);
   sheet.setFrozenColumns(3);
 
-  var widths = [140, 150, 120, 170, 130, 130, 210, 260, 120, 120, 90, 150, 220, 260, 120, 120, 100, 120, 240, 130, 150];
+  var widths = [140, 150, 120, 170, 130, 130, 210, 260, 120, 120, 90, 150, 220, 260, 120, 120, 100, 120, 240, 130, 150, 140, 240];
   for (var i = 0; i < widths.length; i++) sheet.setColumnWidth(i + 1, widths[i]);
 
   var maxRows = Math.max(sheet.getMaxRows(), 500);
@@ -140,6 +142,7 @@ function doPost(e) {
     if (body.action === 'list') return json_({ ok: true, orders: listOrders_() });
     if (body.action === 'updateStatus') return json_(updateStatus_(body.orderId, body.status));
     if (body.action === 'ping') return json_({ ok: true, pong: true });
+    if (body.action === 'uploadPaymentProof') return json_(uploadPaymentProof_(body));
     return json_({ ok: false, error: 'Unknown action: ' + body.action });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
@@ -200,6 +203,8 @@ function createOrder_(order) {
       totalWeight,
       Number(order.productTotal), Number(order.shipping), Number(order.total),
       file.getUrl(),
+      'Not paid',
+      '',
       emailedCustomer ? 'Yes' : 'No',
       Utilities.formatDate(now, Session.getScriptTimeZone(), 'dd MMM yyyy HH:mm')
     ]);
@@ -209,6 +214,32 @@ function createOrder_(order) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function uploadPaymentProof_(body) {
+  var orderId = String(body.orderId || '').trim().toUpperCase();
+  var mimeType = String(body.mimeType || '').toLowerCase();
+  var dataUrl = String(body.dataUrl || '');
+  var fileName = String(body.fileName || 'payment-screenshot').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 120);
+  if (!orderId || !dataUrl) return { ok: false, error: 'Order ID and screenshot are required.' };
+  if (!/^image\/(png|jpeg|webp)$/.test(mimeType)) return { ok: false, error: 'Only PNG, JPG and WebP images are accepted.' };
+  var comma = dataUrl.indexOf(',');
+  if (comma === -1) return { ok: false, error: 'Invalid image data.' };
+  var bytes = Utilities.base64Decode(dataUrl.slice(comma + 1));
+  if (bytes.length > 5 * 1024 * 1024) return { ok: false, error: 'The screenshot must be smaller than 5 MB.' };
+
+  var sheet = getSheet_();
+  var ids = sheet.getLastRow() > 1 ? sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues() : [];
+  for (var i = 0; i < ids.length; i++) {
+    if (String(ids[i][0]).trim().toUpperCase() !== orderId) continue;
+    var file = DriveApp.createFile(Utilities.newBlob(bytes, mimeType, fileName));
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    var row = i + 2;
+    sheet.getRange(row, 20).setValue('Proof uploaded');
+    sheet.getRange(row, 21).setValue(file.getUrl());
+    return { ok: true, paymentStatus: 'Proof uploaded', paymentProofUrl: file.getUrl() };
+  }
+  return { ok: false, error: 'Order not found: ' + orderId };
 }
 
 function nextOrderId_(sheet) {
@@ -262,7 +293,9 @@ function listOrders_() {
       shipping: Number(r[16]) || 0,
       total: Number(r[17]) || 0,
       invoiceUrl: String(r[18]),
-      emailedCustomer: String(r[19])
+      paymentStatus: String(r[19] || 'Not paid'),
+      paymentProofUrl: String(r[20] || ''),
+      emailedCustomer: String(r[21] || '')
     });
   }
   return out;
@@ -304,7 +337,7 @@ function updateStatus_(orderId, status) {
     if (String(ids[i][0]) === String(orderId)) {
       var row = i + 2;
       sheet.getRange(row, 3).setValue(status);
-      sheet.getRange(row, 21).setValue(
+      sheet.getRange(row, 23).setValue(
         Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'dd MMM yyyy HH:mm')
       );
       var email = String(sheet.getRange(row, 7).getValue());
@@ -328,7 +361,7 @@ function onEdit(e) {
     var orderId = String(sheet.getRange(row, 1).getValue());
     var email = String(sheet.getRange(row, 7).getValue());
     var name = String(sheet.getRange(row, 4).getValue());
-    sheet.getRange(row, 21).setValue(
+    sheet.getRange(row, 23).setValue(
       Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'dd MMM yyyy HH:mm')
     );
     if (email) sendStatusEmail_(orderId, name, email, status);
@@ -347,7 +380,7 @@ function buildInvoicePdf_(orderId, date, order, items) {
     var it = items[i];
     rows +=
       '<tr>' +
-      '<td style="padding:12px 10px;border-bottom:1px solid ' + CREAM + ';">Pure Panangarkandu (Palm Candy)<div style="color:#8A7B6B;font-size:11px;">Traditional cloth pouch</div></td>' +
+      '<td style="padding:12px 10px;border-bottom:1px solid ' + CREAM + ';">Pure Panangarkandu (Palm Candy)<div style="color:#8A7B6B;font-size:11px;">D\'s PANAI branded pack</div></td>' +
       '<td style="padding:12px 10px;border-bottom:1px solid ' + CREAM + ';text-align:center;">' + formatWeight_(it.weightGrams) + '</td>' +
       '<td style="padding:12px 10px;border-bottom:1px solid ' + CREAM + ';text-align:center;">' + it.quantity + '</td>' +
       '<td style="padding:12px 10px;border-bottom:1px solid ' + CREAM + ';text-align:right;">' + money_(it.unitPrice) + '</td>' +
@@ -404,7 +437,7 @@ function buildInvoicePdf_(orderId, date, order, items) {
     '<table width="100%" style="border-collapse:collapse;margin-top:18px;font-family:Helvetica,Arial,sans-serif;font-size:13px;"><tr>' +
       '<td style="width:55%;vertical-align:top;color:#6F6459;font-size:11.5px;line-height:1.7;">' +
         (order.instructions ? '<b>Delivery notes:</b> ' + esc_(order.instructions) + '<br>' : '') +
-        'Payment is confirmed with you on WhatsApp before dispatch.<br>Thank you for keeping a traditional taste alive.' +
+        'Payment is optional. You may pay by QR or confirm payment with us on WhatsApp before dispatch.<br>Thank you for keeping a traditional taste alive.' +
       '</td>' +
       '<td style="width:45%;">' +
         '<table width="100%" style="border-collapse:collapse;">' +
@@ -523,7 +556,7 @@ function sendOwnerEmail_(orderId, order, items, invoice, summary) {
 function sendStatusEmail_(orderId, name, email, status) {
   var lines = {
     'Pending': 'We have your order and will confirm it shortly.',
-    'Confirmed': 'Your order is confirmed and is being packed in our traditional cloth pouch.',
+    'Confirmed': 'Your order is confirmed and is being packed in our D\'s PANAI branded pack.',
     'Shipped': 'Good news — your order has been shipped.',
     'In Transit': 'Your parcel is on its way to you.',
     'Delivered': 'Your order has been delivered. We hope you enjoy it!'

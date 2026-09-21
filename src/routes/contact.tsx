@@ -79,7 +79,7 @@ function Contact() {
       <Reveal delay={140}>
         <img
           src={IMAGES.brand}
-          alt="D's PANAI Panangarkandu presented in its traditional cloth pouch"
+          alt="D's PANAI Panangarkandu presented in its branded pack"
           loading="lazy"
           className="w-full rounded-3xl object-cover shadow-lift"
         />

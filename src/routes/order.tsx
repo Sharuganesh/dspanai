@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Loader2, Upload } from "lucide-react";
 import { OrderLoading } from "@/components/OrderLoading";
 import {
   EMPTY_DETAILS,
@@ -10,7 +10,7 @@ import {
   type ShippingDestination,
 } from "@/lib/cart";
 import { BRAND, IMAGES, PRODUCT, calculatePrice, formatINR, formatWeight } from "@/lib/product";
-import { placeOrder } from "@/lib/orders.functions";
+import { placeOrder, uploadPaymentProof } from "@/lib/orders.functions";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/order")({
@@ -43,6 +43,9 @@ const REQUIRED: (keyof CustomerDetails)[] = [
   "state",
   "pincode",
 ];
+
+const PAYMENT_QR_URL =
+  "https://dspanai.lovable.app/__l5e/assets-v1/b3f3c6ee-aea6-411d-87a0-d5356b065c8a/dspanai-payment-qr.png";
 
 type FieldDef = {
   key: keyof CustomerDetails;
@@ -83,8 +86,11 @@ function OrderPage() {
   const [touched, setTouched] = useState(false);
   const [placing, setPlacing] = useState(false);
   const [placed, setPlaced] = useState<{ orderId: string; emailed: boolean } | null>(null);
+  const [paymentMessage, setPaymentMessage] = useState<string | null>(null);
+  const [uploadingProof, setUploadingProof] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const submitOrder = useServerFn(placeOrder);
+  const submitPaymentProof = useServerFn(uploadPaymentProof);
 
   const shipping =
     details.country === "International" ? BRAND.shippingInternational : BRAND.shippingIndia;
@@ -134,6 +140,28 @@ function OrderPage() {
     }
   };
 
+  const handlePaymentProof = async (file: File) => {
+    if (!placed) return;
+    setUploadingProof(true);
+    setPaymentMessage(null);
+    try {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error("We could not read that screenshot."));
+        reader.readAsDataURL(file);
+      });
+      await submitPaymentProof({
+        data: { orderId: placed.orderId, fileName: file.name, mimeType: file.type, dataUrl },
+      });
+      setPaymentMessage("Payment screenshot received. We will verify it before dispatch.");
+    } catch (err) {
+      setPaymentMessage(err instanceof Error ? err.message : "We could not upload that screenshot.");
+    } finally {
+      setUploadingProof(false);
+    }
+  };
+
   if (placed) {
     return (
       <div className="mx-auto max-w-[760px] px-6 py-20 md:px-8 md:py-28">
@@ -157,6 +185,40 @@ function OrderPage() {
               ? "Your invoice PDF and a thank-you note have been emailed to you."
               : "Add an email next time and we will send your invoice PDF automatically."}
           </p>
+          <div className="mt-8 grid gap-6 border-t border-border pt-8 text-left md:grid-cols-[180px_1fr] md:items-center">
+            <img src={PAYMENT_QR_URL} alt="D's PANAI payment QR code" className="mx-auto w-full max-w-[180px] rounded-xl border border-border" />
+            <div>
+              <p className="eyebrow">Optional payment</p>
+              <h2 className="mt-2 font-display text-xl">Pay now or wait for WhatsApp</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Scan the QR to pay the order total, or wait and we will contact you directly on WhatsApp. Payment is not required to place the order.
+              </p>
+              <a
+                href={BRAND.whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex rounded-full bg-forest px-5 py-3 text-xs font-bold tracking-wide text-primary-foreground uppercase"
+              >
+                Contact us on WhatsApp
+              </a>
+              <label className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded-full border border-forest/25 px-5 py-3 text-xs font-bold tracking-wide text-forest uppercase hover:bg-cream">
+                <Upload className="size-4" />
+                {uploadingProof ? "Uploading" : "Upload payment screenshot"}
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="sr-only"
+                  disabled={uploadingProof}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) void handlePaymentProof(file);
+                    e.currentTarget.value = "";
+                  }}
+                />
+              </label>
+              {paymentMessage && <p className="mt-3 text-xs text-forest">{paymentMessage}</p>}
+            </div>
+          </div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               to="/shop"

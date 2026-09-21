@@ -9,12 +9,12 @@ export const Route = createFileRoute("/purity")({
       {
         name: "description",
         content:
-          "One product, one promise: how D's PANAI selects Panangarkandu and packs it in a plastic-free primary cloth pouch.",
+          "One product, one promise: how D's PANAI selects Panangarkandu and presents it in our illustrated branded pack.",
       },
       { property: "og:title", content: "One product. One promise. — D's PANAI" },
       {
         property: "og:description",
-        content: "Our approach to sourcing, selection and plastic-free cloth pouch packaging.",
+        content: "Our approach to sourcing, selection and the D's PANAI branded pack.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -37,8 +37,8 @@ const PILLARS = [
     body: "Every batch is checked before it is packed, so what reaches you is the same quality we would keep for our own home.",
   },
   {
-    title: "Traditional cloth pouch",
-    body: "Packed in a plastic-free primary cloth pouch with a drawstring, rather than a printed plastic package.",
+    title: "Recognisable branded pack",
+    body: "Packed in the illustrated D's PANAI pack shown across our product pages.",
   },
   {
     title: "Direct ordering",
@@ -99,8 +99,8 @@ function Purity() {
               not earned.
             </p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-              Our packaging claim is equally precise: it is packed in a plastic-free primary cloth
-              pouch. Outer shipping materials may vary by courier.
+              Our packaging is shown clearly in the D's PANAI branded pack. Outer shipping
+              materials may vary by courier.
             </p>
             <Link
               to="/product/$slug"

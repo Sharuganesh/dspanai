@@ -232,7 +232,7 @@ function Dashboard() {
         <table className="w-full min-w-[1050px] text-left text-sm">
           <thead className="bg-ivory text-xs tracking-wide text-warm uppercase">
             <tr>
-              {["Order", "Customer", "Items", "Delivery", "Total", "Status", "Invoice"].map((h) => (
+              {["Order", "Customer", "Items", "Delivery", "Total", "Status", "Payment", "Invoice"].map((h) => (
                 <th key={h} className="px-4 py-3 font-semibold">
                   {h}
                 </th>
@@ -294,6 +294,21 @@ function Dashboard() {
                     ))}
                   </select>
                 </td>
+                <td className="px-4 py-4 text-xs">
+                  <p className={cn("font-bold", o.paymentStatus === "Proof uploaded" ? "text-emerald-700" : "text-warm")}>
+                    {o.paymentStatus || "Not paid"}
+                  </p>
+                  {o.paymentProofUrl && (
+                    <a
+                      href={o.paymentProofUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 font-bold text-forest uppercase hover:text-gold"
+                    >
+                      Proof <ExternalLink className="size-3" />
+                    </a>
+                  )}
+                </td>
                 <td className="px-4 py-4">
                   {o.invoiceUrl ? (
                     <a
@@ -312,7 +327,7 @@ function Dashboard() {
             ))}
             {visible.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-foreground">
+                <td colSpan={8} className="px-4 py-12 text-center text-sm text-muted-foreground">
                   No orders match this view yet.
                 </td>
               </tr>

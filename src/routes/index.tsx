@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Buy Pure Panangarkandu (palm candy) online from D's PANAI — a 25+ year family trade, packed in a plastic-free cloth pouch. From ₹300 / 250 g. Shipping ₹50 across India, ₹500 worldwide.",
+          "Buy Pure Panangarkandu (palm candy) online from D's PANAI — a 25+ year family trade in our illustrated branded pack. From ₹299 / 250 g. Shipping ₹50 across India, ₹500 worldwide.",
       },
       { property: "og:title", content: "D's PANAI — Pure Panangarkandu (Palm Candy)" },
       {
@@ -95,7 +95,7 @@ function Hero() {
             style={{ animationDelay: "300ms" }}
           >
             Pure Panangarkandu (palm candy) from a family trade of {BRAND.yearsInTrade}+ years —
-            packed in a plastic-free cloth pouch and delivered to your door.
+            packed in our illustrated D's PANAI pack and delivered to your door.
           </p>
 
           <div
@@ -135,13 +135,13 @@ function Hero() {
           >
             <img
               src={IMAGES.hero}
-              alt="D's PANAI Panangarkandu palm candy cloth pouch beside crystals on a wooden table"
+              alt="D's PANAI Panangarkandu branded pack beside palm candy crystals on a wooden table"
               width={1376}
               height={768}
               className="ornate-frame w-full object-cover shadow-lift"
             />
             <p className="caption mt-3 text-center">
-              Our 250 g cloth pouch</p>
+              Our D's PANAI pack</p>
             <div className="absolute -bottom-2 -left-3 rounded-2xl border border-gold/40 bg-ivory/95 px-5 py-3 shadow-soft backdrop-blur md:-left-10">
               <p className="eyebrow">Starting at</p>
               <p className="font-display text-2xl text-forest">
@@ -171,9 +171,9 @@ const TRUST = [
   },
   {
     icon: Package,
-    en: "Plastic-free cloth pouch",
+    en: "Recognisable D's PANAI pack",
     ta: "",
-    body: "Primary packing is a traditional drawstring cloth pouch.",
+    body: "Our illustrated pack keeps the product recognisable from shelf to doorstep.",
   },
   {
     icon: Globe2,
@@ -280,14 +280,14 @@ function FeaturedProduct() {
             <div className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
               <img
                 src={IMAGES.product}
-                alt="D's PANAI Pure Panangarkandu palm candy in its signature cloth pouch"
+                alt="D's PANAI Pure Panangarkandu palm candy in its branded pack"
                 width={1024}
                 height={1024}
                 loading="lazy"
                 className="aspect-square w-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]"
               />
               <span className="absolute top-5 left-5 rounded-full bg-ivory/90 px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] text-forest uppercase backdrop-blur">
-                Signature cloth pouch
+                D's PANAI branded pack
               </span>
             </div>
             <p className="caption mt-3">Product photo</p>
@@ -399,11 +399,11 @@ function WaysToUse() {
 }
 
 /* --------------------------------------------------------- HOW WE PACK IT
-   Image used here: IMAGES.pouch — detail of the drawstring cloth pouch. */
+  Image used here: IMAGES.pouchStudio — detail of the branded pack. */
 const STEPS = [
   ["Selected by hand", "", "Crystals are sorted so only clean, well-formed pieces are packed."],
   ["Weighed to your order", "", "From 250 g upwards in 50 g steps — you choose the exact weight."],
-  ["Packed in cloth", "", "Filled into our plastic-free drawstring cloth pouch."],
+  ["Packed with care", "", "Sealed in the illustrated D's PANAI branded pack."],
   ["Shipped & confirmed", "", "Outer protective packing, then dispatched and confirmed on WhatsApp."],
 ];
 
@@ -438,7 +438,7 @@ function HowWePack() {
           <Reveal delay={120}>
             <img
               src={IMAGES.pouch}
-              alt="Detail of the traditional woven cloth pouch and its drawstring"
+              alt="Detail of the D's PANAI branded pack"
               width={1024}
               height={1024}
               loading="lazy"
@@ -669,7 +669,7 @@ function InstagramSection() {
       </Reveal>
       <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
         {shots.map(([src, alt], i) => (
-          <Reveal key={src} delay={i * 80}>
+          <Reveal key={`${src}-${i}`} delay={i * 80}>
             <div className="group overflow-hidden rounded-2xl border border-border">
               <img
                 src={src}
